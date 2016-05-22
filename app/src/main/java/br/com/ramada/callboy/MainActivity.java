@@ -13,8 +13,10 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import br.com.ramada.callboy.dao.BancoDeDados;
+import br.com.ramada.callboy.dao.ContatoDataAccess;
+import br.com.ramada.callboy.dao.DataAccess;
 import br.com.ramada.callboy.model.Contato;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                redirecionarAdicaoContato();
+                criarContatoTeste();
+                //redirecionarAdicaoContato();
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                   //      .setAction("Action", null).show();
             }
@@ -73,9 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void criarContatoTeste(){
 
-        BancoDeDados bd = new BancoDeDados(getApplicationContext());
+        ContatoDataAccess contatoDAO = new ContatoDataAccess(getApplicationContext());
         Contato contato = new Contato("Raquel","992830552");
-        bd.addNumber(contato);
+        contatoDAO.addNumber(contato);
+
     }
 
 
