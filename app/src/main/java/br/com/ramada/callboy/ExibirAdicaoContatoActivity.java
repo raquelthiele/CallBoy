@@ -15,6 +15,8 @@ import br.com.ramada.callboy.dao.ContatoDataAccess;
 import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
 
+import static br.com.ramada.callboy.CallBoy.BD;
+
 public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
 
     @Override
@@ -79,8 +81,7 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
 
         //Configuracao configuracao = new Configuracao(checkBoxBloquearChamada.isChecked(),checkBoxBloquearSMS.isChecked(),checkBoxAnunciarChamada.isChecked(),checkBoxAnunciarSMS.isChecked());
         Contato novoContato= new Contato(nomeContato.getText().toString(),numeroTelefone.getText().toString()/*,configuracao*/);
-        ContatoDataAccess contatoDAO = new ContatoDataAccess(getApplicationContext());
-        contatoDAO.salvarContato(novoContato);
+        BD.contatoDAO.salvarContato(novoContato);
 
     }
 

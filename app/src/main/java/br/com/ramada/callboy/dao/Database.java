@@ -11,38 +11,44 @@ import br.com.ramada.callboy.model.Contato;
  * Classe responsavel pela criacao do banco e tabelas
  * Created by Ramada on 21/05/2016.
  */
-public class DataAccess extends SQLiteOpenHelper
+public class Database extends SQLiteOpenHelper
 {
-    private static final int DB_VERSION = 1;
+    protected static SQLiteDatabase BD;
+    private static final int DB_VERSION = 5;
     private static final String DB_NAME = "CallBoyDB";
 
+    public static ContatoDataAccess contatoDAO;
+
     private static final String CREATE_DB =
-            "BEGIN TRANSACTION;" +
-            "CREATE TABLE [contato] (" +
-            "[id_contato] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT," +
-            "[nome] VARCHAR(100)  NOT NULL," +
-            "[numero_telefone] VARCHAR(100)  NOT NULL" +
-            ");" +
-            "CREATE TABLE [agenda] (" +
-            "[id_contato] INTEGER  NULL," +
-            "[bloqueio] BOOLEAN DEFAULT '0' NULL," +
-            "[anuncio] BOOLEAN DEFAULT '0' NULL," +
-            "[leSMS] BOOLEAN DEFAULT '0' NULL," +
-            "[excluiSMS] BOOLEAN DEFAULT '0' NULL," +
+            "CREATE TABLE contato ( id_contato INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, nome VARCHAR(100)  NOT NULL, numero_telefone VARCHAR(100)  NOT NULL )" ;
+            // +
+            /*
+            "CREATE TABLE agenda (" +
+            "id_contato INTEGER  NULL," +
+            "bloqueio BOOLEAN DEFAULT '0' NULL," +
+            "anuncio BOOLEAN DEFAULT '0' NULL," +
+            "leSMS BOOLEAN DEFAULT '0' NULL," +
+            "excluiSMS BOOLEAN DEFAULT '0' NULL," +
             "FOREIGN KEY(id_contato) REFERENCES Contato(id_contato) ON UPDATE CASCADE ON DELETE CASCADE" +
-            ");" +
-            "COMMIT;";
+            ");" + */
+            //"COMMIT;";
 
     private static final String UPDATE_DB =
-            "BEGIN TRANSACTION;" +
-            "DROP TABLE IF EXISTS [contato];" +
-            "DROP TABLE IF EXISTS [agenda];"        ;
+            "DROP TABLE IF EXISTS contato;";
 
 
 
-    public DataAccess(Context context) {
+    public Database(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.BD = this.getWritableDatabase();
+
+        contatoDAO = new ContatoDataAccess(BD);
     }
+
+    public void close() {
+        BD.close();
+    }
+
 
 
     @Override
@@ -50,6 +56,11 @@ public class DataAccess extends SQLiteOpenHelper
         //String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABELA_CONTATO + "(" +KEY_ID +" INTEGER PRIMARY KEY, " + KEY_NOME + " TEXT, " + KEY_NUMERO + " TEXT UNIQUE)";
         db.execSQL(CREATE_DB);
         Log.d("msg",CREATE_DB);
+
+        //this.db = this.getWritableDatabase();
+
+
+        //db.close();
     }
 
     @Override

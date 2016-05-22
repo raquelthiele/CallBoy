@@ -13,8 +13,9 @@ import android.view.MenuItem;
 import java.util.List;
 
 import br.com.ramada.callboy.dao.ContatoDataAccess;
-import br.com.ramada.callboy.dao.DataAccess;
 import br.com.ramada.callboy.model.Contato;
+
+import static br.com.ramada.callboy.CallBoy.BD;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
                 criarContatoTeste();
                 //redirecionarAdicaoContato();
-                ContatoDataAccess contatoDAO = new ContatoDataAccess(getApplicationContext());
-                List<Contato> contatos = contatoDAO.getAllContacts();
+                //ContatoDataAccess contatoDAO = new ContatoDataAccess(getApplicationContext());
+                List<Contato> contatos = BD.contatoDAO.getAllContacts();
 
 
                 redirecionarAdicaoContato();
@@ -80,10 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void criarContatoTeste(){
 
-
-        ContatoDataAccess contatoDAO = new ContatoDataAccess(getApplicationContext());
         Contato contato = new Contato("Raquel","992830552");
-        contatoDAO.salvarContato(contato);
+        BD.contatoDAO.salvarContato(contato);
 
     }
 
