@@ -9,10 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import br.com.ramada.callboy.dao.ContatoDataAccess;
 import br.com.ramada.callboy.model.Contato;
 import br.com.ramada.callboy.model.Grupo;
 import br.com.ramada.callboy.model.Horario;
@@ -38,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
                 criarContatoTeste();
                 //redirecionarAdicaoContato();
-                //ContatoDataAccess contatoDAO = new ContatoDataAccess(getApplicationContext());
-                List<Contato> contatos = BD.contatoDAO.getAllContacts();
+                //List<Contato> contatos = BD.contatoDAO.getAllContacts();
 
 
                 redirecionarAdicaoContato();
@@ -47,6 +48,20 @@ public class MainActivity extends AppCompatActivity {
                   //      .setAction("Action", null).show();
             }
         });
+
+        populaListaContatos();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        populaListaContatos();
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        populaListaContatos();
     }
 
     private void redirecionarAdicaoContato() {
@@ -55,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
         //String message = editText.getText().toString();
         //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
-
-
     }
 
     @Override
@@ -92,6 +105,20 @@ public class MainActivity extends AppCompatActivity {
         Horario permanente = new Horario("Permanente");
         BD.horarioDAO.salvarHorario(permanente);
 
+    }
+
+    private void populaListaContatos(){
+        List<Contato> contatos = BD.contatoDAO.getAllContacts();
+
+        List<String> nomesContatos = new ArrayList<>();
+        for(Contato c : contatos){
+            nomesContatos.add(c.getNome());
+        }
+
+        ListView listView = (ListView) findViewById(R.id.listView_contatos);
+        listView.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_multiple_choice, nomesContatos));
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
 
 
