@@ -1,15 +1,14 @@
+
 package br.com.ramada.callboy;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import java.util.List;
 
@@ -36,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
                 criarContatoTeste();
                 //redirecionarAdicaoContato();
+                ContatoDataAccess contatoDAO = new ContatoDataAccess(getApplicationContext());
+                List<Contato> contatos = contatoDAO.getAllContacts();
+
+
+                redirecionarAdicaoContato();
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                   //      .setAction("Action", null).show();
             }
@@ -76,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void criarContatoTeste(){
 
+
         ContatoDataAccess contatoDAO = new ContatoDataAccess(getApplicationContext());
         Contato contato = new Contato("Raquel","992830552");
-        contatoDAO.addNumber(contato);
+        contatoDAO.salvarContato(contato);
 
     }
-
 
 
 

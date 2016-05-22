@@ -10,13 +10,14 @@ public class Contato {
     private Integer id;
     private String nome;
     private String numeroTelefone;
-
+    private Configuracao configuracao;
     private List<Grupo> grupos;
 
 
-    public Contato(String nome, String numeroTelefone) {
+    public Contato(String nome, String numeroTelefone/*, Configuracao configuracao*/) {
         this.nome = nome;
         this.numeroTelefone = numeroTelefone;
+        //this.configuracao = configuracao;
     }
 
     public Contato() {
@@ -62,5 +63,13 @@ public class Contato {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Configuracao getConfiguracao() {
+        return configuracao;
+    }
+
+    public void setConfiguracao(Configuracao configuracao) {
+        this.configuracao = configuracao;
     }
 }
