@@ -7,20 +7,24 @@ import java.util.List;
  */
 public class Contato {
 
+    private Integer id;
     private String nome;
     private String numeroTelefone;
 
     private List<Grupo> grupos;
 
-    public List<Grupo> getGrupos() {
-        return grupos;
-    }
-
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
-    }
 
     public Contato(String nome, String numeroTelefone) {
+        this.nome = nome;
+        this.numeroTelefone = numeroTelefone;
+    }
+
+    public Contato() {
+
+    }
+
+    public Contato(Integer id, String nome, String numeroTelefone) {
+        this.id = id;
         this.nome = nome;
         this.numeroTelefone = numeroTelefone;
     }
@@ -44,4 +48,19 @@ public class Contato {
     public void adicionarGrupo(Grupo grupo){}
 
     public void removerGrupo(Grupo grupo){}
+    public List<Grupo> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+        this.grupos = grupos;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
