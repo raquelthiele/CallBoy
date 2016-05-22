@@ -17,8 +17,8 @@ import br.com.ramada.callboy.model.Configuracao;
  */
 public class ContatoDataAccess {
 
-    private static final String TABELA_NOME = "contato";
-    private static final String CAMPO_ID = "id_contato";
+    protected static final String TABELA_NOME = "contato";
+    protected static final String CAMPO_ID = "id_contato";
     private static final String CAMPO_NOME = "nome";
     private static final String CAMPO_NUMERO = "numero_telefone";
     public SQLiteDatabase db;

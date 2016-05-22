@@ -14,24 +14,13 @@ import br.com.ramada.callboy.model.Contato;
 public class Database extends SQLiteOpenHelper
 {
     protected static SQLiteDatabase BD;
-    private static final int DB_VERSION = 6;
+    private static final int DB_VERSION = 9;
     private static final String DB_NAME = "CallBoyDB";
 
     public static ContatoDataAccess contatoDAO;
-
-    private static final String CREATE_DB =
-            "CREATE TABLE agenda (" +
-            "id_contato INTEGER  NULL," +
-            "bloqueio BOOLEAN DEFAULT '0' NULL," +
-            "anuncio BOOLEAN DEFAULT '0' NULL," +
-            "leSMS BOOLEAN DEFAULT '0' NULL," +
-            "excluiSMS BOOLEAN DEFAULT '0' NULL," +
-            "FOREIGN KEY(id_contato) REFERENCES Contato(id_contato) ON UPDATE CASCADE ON DELETE CASCADE" +
-            ");";
-
-    private static final String UPDATE_DB =
-            "DROP TABLE IF EXISTS contato;";
-
+    public static GrupoDataAccess grupoDAO;
+    public static HorarioDataAccess horarioDAO;
+    public static AgendaDataAccess agendaDAO;
 
 
     public Database(Context context) {
@@ -39,6 +28,9 @@ public class Database extends SQLiteOpenHelper
         this.BD = this.getWritableDatabase();
 
         contatoDAO = new ContatoDataAccess(BD);
+        grupoDAO = new GrupoDataAccess(BD);
+        horarioDAO = new HorarioDataAccess(BD);
+        agendaDAO = new AgendaDataAccess(BD);
     }
 
     public void close() {
@@ -48,17 +40,28 @@ public class Database extends SQLiteOpenHelper
 
 
     // TODO : retornar PRAGMA foreign_keys; PRAGMA foreign_keys = ON; Testar essas titicas depois e ver o q acontece
+    // NÃO TÁ PEGANDO, VOU ALI ME MATAR E JÁ VOLTO :(
     @Override
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL(CREATE_DB);
+        db.execSQL("PRAGMA foreign_keys = ON;");
         db.execSQL(contatoDAO.CREATE_TABELA);
         Log.d("msg",contatoDAO.CREATE_TABELA);
+        db.execSQL(grupoDAO.CREATE_TABELA);
+        Log.d("msg",grupoDAO.CREATE_TABELA);
+        db.execSQL(horarioDAO.CREATE_TABELA);
+        Log.d("msg",horarioDAO.CREATE_TABELA);
+        db.execSQL(agendaDAO.CREATE_TABELA);
+        Log.d("msg",agendaDAO.CREATE_TABELA);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //db.execSQL(UPDATE_DB);
         db.execSQL(contatoDAO.DROP_TABELA);
+        db.execSQL(grupoDAO.DROP_TABELA);
+        db.execSQL(horarioDAO.DROP_TABELA);
+        db.execSQL(agendaDAO.DROP_TABELA);
         onCreate(db);
     }
 

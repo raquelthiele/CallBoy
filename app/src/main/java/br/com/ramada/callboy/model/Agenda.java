@@ -1,63 +1,30 @@
 package br.com.ramada.callboy.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ramada on 21/05/2016.
  */
 public class Agenda {
-    private boolean bloqueioChamada;
-    private boolean anuncioChamada;
-    private boolean bloqueioSms;
-    private boolean anuncioSms;
+
+    private Map<Identificador, Configuracao> agendamento = new HashMap<>();
 
     private List<Contato> contatos;
     private List<Grupo> grupos;
     private List<Modo> modos;
     private List<Horario> horarios;
+    private List<Configuracao> configs;
 
-    public Agenda(boolean bloqueioChamada, boolean anuncioChamada, boolean bloqueioSms, boolean anuncioSms, List<Contato> contatos, List<Grupo> grupos, List<Modo> modos, List<Horario> horarios) {
-        this.bloqueioChamada = bloqueioChamada;
-        this.anuncioChamada = anuncioChamada;
-        this.bloqueioSms = bloqueioSms;
-        this.anuncioSms = anuncioSms;
+    public Agenda(List<Contato> contatos, List<Grupo> grupos, List<Modo> modos, List<Horario> horarios, List<Configuracao> configs) {
         this.contatos = contatos;
         this.grupos = grupos;
         this.modos = modos;
         this.horarios = horarios;
+        this.configs = configs;
     }
 
-    public boolean isBloqueioChamada() {
-        return bloqueioChamada;
-    }
-
-    public void setBloqueioChamada(boolean bloqueioChamada) {
-        this.bloqueioChamada = bloqueioChamada;
-    }
-
-    public boolean isAnuncioChamada() {
-        return anuncioChamada;
-    }
-
-    public void setAnuncioChamada(boolean anuncioChamada) {
-        this.anuncioChamada = anuncioChamada;
-    }
-
-    public boolean isBloqueioSms() {
-        return bloqueioSms;
-    }
-
-    public void setBloqueioSms(boolean bloqueioSms) {
-        this.bloqueioSms = bloqueioSms;
-    }
-
-    public boolean isAnuncioSms() {
-        return anuncioSms;
-    }
-
-    public void setAnuncioSms(boolean anuncioSms) {
-        this.anuncioSms = anuncioSms;
-    }
 
     public List<Contato> getContatos() {
         return contatos;
@@ -91,7 +58,9 @@ public class Agenda {
         this.horarios = horarios;
     }
 
-    public void adicionaConfiguracao(Contato contato, boolean bloqueioChamada, boolean anuncioChamada, boolean bloqueioSms, boolean anuncioSms, Modo modo) {
+    public void adicionaConfiguracao(Contato contato, Configuracao configuracao /*, Modo modo*/) {
+        Identificador identificador = new Identificador(contato.getId(),1,1);
+        agendamento.put(identificador,configuracao);
 
     }
 
@@ -124,5 +93,18 @@ public class Agenda {
     }
 
 
+    private static class Identificador{
+        private int idContato;
+        private int idGrupo;
+        private int idHorario;
 
+        public Identificador(int idContato, int idGrupo, int idHorario) {
+            this.idContato = idContato;
+            this.idGrupo = idGrupo;
+            this.idHorario = idHorario;
+        }
     }
+
+
+
+}

@@ -14,6 +14,8 @@ import java.util.List;
 
 import br.com.ramada.callboy.dao.ContatoDataAccess;
 import br.com.ramada.callboy.model.Contato;
+import br.com.ramada.callboy.model.Grupo;
+import br.com.ramada.callboy.model.Horario;
 
 import static br.com.ramada.callboy.CallBoy.BD;
 
@@ -83,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
 
         Contato contato = new Contato("Raquel","992830552");
         BD.contatoDAO.salvarContato(contato);
+
+        Grupo geral = new Grupo("Geral");
+        BD.grupoDAO.salvarGrupo(geral);
+
+        Horario permanente = new Horario("Permanente");
+        BD.horarioDAO.salvarHorario(permanente);
 
     }
 

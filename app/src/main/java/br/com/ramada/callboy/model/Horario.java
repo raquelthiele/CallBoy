@@ -24,6 +24,14 @@ public class Horario {
         this.nome = nome;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public void adicionaFaixaHoraria(FaixaHoraria faixaHoraria){}
 
     public void removeFaixaHoraria(FaixaHoraria faixaHoraria){}
