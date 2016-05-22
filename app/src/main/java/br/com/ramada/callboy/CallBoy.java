@@ -4,7 +4,7 @@ import android.app.Application;
 import br.com.ramada.callboy.dao.Database;
 
 /**
- * Created by danie on 22/05/2016.
+ * Created by Ramada on 22/05/2016.
  */
 public class CallBoy extends Application {
 
@@ -15,7 +15,6 @@ public class CallBoy extends Application {
     public void onCreate() {
         super.onCreate();
         BD = new Database(this);
-        //BD.open();
     }
 
     @Override
