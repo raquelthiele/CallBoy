@@ -47,12 +47,12 @@ public class BancoDeDados extends SQLiteOpenHelper
         onCreate(db);
     }
 
-    public long addNumber(Contato contact){
-        Log.d("msg","added contact");
+    public long addNumber(Contato contato){
+        Log.d("msg","contato adicionado");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NOME, contact.getNome());
-        values.put(KEY_NUMERO, contact.getNumeroTelefone());
+        values.put(KEY_NOME, contato.getNome());
+        values.put(KEY_NUMERO, contato.getNumeroTelefone());
         long id = db.insert(TABELA_CONTATO, null, values);
         db.close();
         return id;
