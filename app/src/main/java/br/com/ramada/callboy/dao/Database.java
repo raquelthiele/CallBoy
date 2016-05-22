@@ -47,6 +47,7 @@ public class Database extends SQLiteOpenHelper
 
 
 
+    // TODO : retornar PRAGMA foreign_keys; PRAGMA foreign_keys = ON; Testar essas titicas depois e ver o q acontece
     @Override
     public void onCreate(SQLiteDatabase db) {
         //db.execSQL(CREATE_DB);
