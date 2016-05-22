@@ -79,7 +79,7 @@ public class ExibirAdicaoContatoActivity extends AppCompatActivity {
         Configuracao configuracao = new Configuracao(checkBoxBloquearChamada.isChecked(),checkBoxBloquearSMS.isChecked(),checkBoxAnunciarChamada.isChecked(),checkBoxAnunciarSMS.isChecked());
         Contato novoContato= new Contato(nomeContato.getText().toString(),numeroTelefone.getText().toString(),configuracao);
         BancoDeDados banco = new BancoDeDados(getApplicationContext());
-        banco.addNumber(novoContato);
+        banco.salvarContato(novoContato);
 
     }
 

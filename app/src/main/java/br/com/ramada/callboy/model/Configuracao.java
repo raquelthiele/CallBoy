@@ -19,4 +19,36 @@ public class Configuracao {
         this.anuncioChamada = anuncioChamada;
         this.anuncioSms = anuncioSms;
     }
+
+    public boolean isBloqueioChamada() {
+        return bloqueioChamada;
+    }
+
+    public void setBloqueioChamada(boolean bloqueioChamada) {
+        this.bloqueioChamada = bloqueioChamada;
+    }
+
+    public boolean isAnuncioChamada() {
+        return anuncioChamada;
+    }
+
+    public void setAnuncioChamada(boolean anuncioChamada) {
+        this.anuncioChamada = anuncioChamada;
+    }
+
+    public boolean isBloqueioSms() {
+        return bloqueioSms;
+    }
+
+    public void setBloqueioSms(boolean bloqueioSms) {
+        this.bloqueioSms = bloqueioSms;
+    }
+
+    public boolean isAnuncioSms() {
+        return anuncioSms;
+    }
+
+    public void setAnuncioSms(boolean anuncioSms) {
+        this.anuncioSms = anuncioSms;
+    }
 }

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         BancoDeDados bd = new BancoDeDados(getApplicationContext());
         Contato contato = new Contato("Raquel","992830552", configuracao);
-        bd.addNumber(contato);
+        bd.salvarContato(contato);
     } */
 
 
