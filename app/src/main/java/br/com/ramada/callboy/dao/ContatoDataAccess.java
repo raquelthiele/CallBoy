@@ -46,7 +46,7 @@ public class ContatoDataAccess {
 
 
 
-    public long salvarContato(Contato contato){
+    public int salvarContato(Contato contato){
       //  limparBanco();
         Log.d("msg","contato adicionado");
         ContentValues values = new ContentValues();
@@ -57,7 +57,7 @@ public class ContatoDataAccess {
         //values.put(CAMPO_BLOQ_SMS, obterIntDeBooleano(contato.getConfiguracao().isBloqueioSms()));
         //values.put(CAMPO_ANUNCIA_SMS, obterIntDeBooleano(contato.getConfiguracao().isAnuncioSms()));
 
-        long id = db.insert(TABELA_NOME, null, values);
+        int id = (int) db.insert(TABELA_NOME, null, values);
         return id;
     }
 

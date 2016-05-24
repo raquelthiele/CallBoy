@@ -74,15 +74,17 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
 
         EditText nomeContato = (EditText) findViewById( R.id.nomeContato);
         EditText numeroTelefone = (EditText) findViewById( R.id.numeroContato);
-        //CheckBox checkBoxBloquearChamada = (CheckBox) findViewById(R.id.checkBoxBloquearChamada);
-        //CheckBox checkBoxAnunciarChamada = (CheckBox) findViewById(R.id.checkBoxAnunciarChamada);
-        //CheckBox checkBoxBloquearSMS = (CheckBox) findViewById(R.id.checkBoxBloquearSMS);
-        //CheckBox checkBoxAnunciarSMS = (CheckBox) findViewById(R.id.checkBoxAnunciarSMS);
+        CheckBox checkBoxBloquearChamada = (CheckBox) findViewById(R.id.checkBoxBloquearChamada);
+        CheckBox checkBoxAnunciarChamada = (CheckBox) findViewById(R.id.checkBoxAnunciarChamada);
+        CheckBox checkBoxBloquearSMS = (CheckBox) findViewById(R.id.checkBoxBloquearSMS);
+        CheckBox checkBoxAnunciarSMS = (CheckBox) findViewById(R.id.checkBoxAnunciarSMS);
 
-        //Configuracao configuracao = new Configuracao(checkBoxBloquearChamada.isChecked(),checkBoxBloquearSMS.isChecked(),checkBoxAnunciarChamada.isChecked(),checkBoxAnunciarSMS.isChecked());
+        Configuracao configuracao = new Configuracao(checkBoxBloquearChamada.isChecked(),checkBoxBloquearSMS.isChecked(),checkBoxAnunciarChamada.isChecked(),checkBoxAnunciarSMS.isChecked());
         Contato novoContato= new Contato(nomeContato.getText().toString(),numeroTelefone.getText().toString()/*,configuracao*/);
-        BD.contatoDAO.salvarContato(novoContato);
+        int idNovoContato = BD.contatoDAO.salvarContato(novoContato);
 
+        novoContato.setId(idNovoContato);
+        BD.agendaDAO.salvarConfiguracao(novoContato, configuracao);
     }
 
 }

@@ -1,6 +1,9 @@
 package br.com.ramada.callboy.dao;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import br.com.ramada.callboy.model.Configuracao;
+import br.com.ramada.callboy.model.Contato;
 
 /**
  * Created by danie on 22/05/2016.
@@ -40,6 +43,21 @@ public class AgendaDataAccess {
 
     public AgendaDataAccess(SQLiteDatabase db){
         this.db = db;
+    }
+
+    public long salvarConfiguracao(Contato contato, Configuracao configuracao){
+
+        ContentValues values = new ContentValues();
+        values.put(CAMPO_ID_CONTATO, contato.getId());
+        values.put(CAMPO_ID_GRUPO, 1);
+        values.put(CAMPO_ID_HORARIO, 1);
+        values.put(CAMPO_BLOQUEIO_CHAMADA, configuracao.isBloqueioChamada());
+        values.put(CAMPO_ANUNCIO_CHAMADA, configuracao.isAnuncioChamada());
+        values.put(CAMPO_BLOQUEIO_SMS, configuracao.isBloqueioSms());
+        values.put(CAMPO_ANUNCIO_SMS, configuracao.isAnuncioSms());
+
+        int id = (int) db.insert(TABELA_NOME, null, values);
+        return id;
     }
 
 
