@@ -2,6 +2,7 @@ package br.com.ramada.callboy.dao;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
 
@@ -59,6 +60,19 @@ public class AgendaDataAccess {
         int id = (int) db.insert(TABELA_NOME, null, values);
         return id;
     }
+
+    public int atualizarConfiguracao(Contato contato, Configuracao configuracao){
+        Log.d("msg","contato adicionado");
+        ContentValues values = new ContentValues();
+        values.put(CAMPO_BLOQUEIO_CHAMADA, configuracao.isBloqueioChamada());
+        values.put(CAMPO_ANUNCIO_CHAMADA, configuracao.isAnuncioChamada());
+        values.put(CAMPO_BLOQUEIO_SMS, configuracao.isBloqueioSms());
+        values.put(CAMPO_ANUNCIO_SMS, configuracao.isAnuncioSms());
+
+        int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID_CONTATO + " = " + contato.getId(), null);
+        return linhasAlteradas;
+    }
+
 
 
 

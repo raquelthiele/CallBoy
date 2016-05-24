@@ -17,8 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void redirecionarEdicaoContato(int idContato) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("idContato", idContato);
+        Intent intent = new Intent(this, ExibirEdicaoContatoActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -134,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populaListaContatos(){
-        List<Contato> contatos = BD.contatoDAO.getAllContacts();
+        final List<Contato> contatos = BD.contatoDAO.getAllContacts();
         List<String> nomesContatos = new ArrayList<>();
 
         if(contatos != null){
@@ -145,9 +153,36 @@ public class MainActivity extends AppCompatActivity {
 
 
         ListView listView = (ListView) findViewById(R.id.listView_contatos);
-        listView.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_multiple_choice, nomesContatos));
+        /*listView.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_2, nomesContatos));
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        */
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_2, android.R.id.text1,contatos) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+                text1.setText(contatos.get(position).getNome());
+                text2.setText(contatos.get(position).getNumeroTelefone());
+                return view;
+            }
+        };
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // TODO Auto-generated method stub
+                redirecionarEdicaoContato(contatos.get(position).getId());
+            }
+        });
+
+
+
     }
 
 
@@ -173,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     pCur.close();
                 }
-
 
                 if(BD.contatoDAO.getCount(nome, numeroTelefone) == 0){
                     Contato contato = new Contato(nome, numeroTelefone);

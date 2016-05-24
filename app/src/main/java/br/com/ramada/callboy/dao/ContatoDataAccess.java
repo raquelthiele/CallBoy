@@ -77,7 +77,7 @@ public class ContatoDataAccess {
         }
     }
 
-    public Contato getContact(int id){
+    public Contato getContato(int id){
         Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME, CAMPO_NUMERO},
                             CAMPO_ID +"=?",new String[] {String.valueOf(id)},null,null,null,null);
         if(cursor!=null)
@@ -168,9 +168,10 @@ public class ContatoDataAccess {
         return contact;
     }
 
+
     public int getCount(String nome, String numeroTelefone){
         String countQuery = "SELECT COUNT(*) AS COUNT FROM "+ TABELA_NOME + " WHERE " +
-                                CAMPO_NOME + " = '" + nome + "' AND " + CAMPO_NUMERO + " = '" + numeroTelefone +"' ;";
+                CAMPO_NOME + " = '" + nome + "' AND " + CAMPO_NUMERO + " = '" + numeroTelefone +"' ;";
 
         Cursor cursor = db.rawQuery(countQuery, null);
         if(cursor!=null)
@@ -179,6 +180,33 @@ public class ContatoDataAccess {
             return 0;
         int count = Integer.parseInt(cursor.getString(0));
         return count;
+    }
+
+    public int getCount(int idContato){
+        String countQuery = "SELECT COUNT(*) AS COUNT FROM "+ TABELA_NOME + " WHERE " +
+                CAMPO_ID + " = " + idContato + ";";
+
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if(cursor!=null)
+            cursor.moveToFirst();
+        else
+            return 0;
+        int count = Integer.parseInt(cursor.getString(0));
+        return count;
+    }
+
+    public int atualizarContato(Contato contato){
+        Log.d("msg","contato adicionado");
+        ContentValues values = new ContentValues();
+        values.put(CAMPO_NOME, contato.getNome());
+        values.put(CAMPO_NUMERO, contato.getNumeroTelefone());
+        //values.put(CAMPO_BLOQ_CHAMADA, obterIntDeBooleano(contato.getConfiguracao().isBloqueioChamada()));
+        //values.put(CAMPO_ANUNC_CHAMADA, obterIntDeBooleano(contato.getConfiguracao().isAnuncioChamada()));
+        //values.put(CAMPO_BLOQ_SMS, obterIntDeBooleano(contato.getConfiguracao().isBloqueioSms()));
+        //values.put(CAMPO_ANUNCIA_SMS, obterIntDeBooleano(contato.getConfiguracao().isAnuncioSms()));
+
+        int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID + " = " + contato.getId(), null);
+        return linhasAlteradas;
     }
 
 

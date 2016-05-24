@@ -33,6 +33,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.ramada.callboy.MainActivity" />
         </activity>
+        <activity
+                android:name=".ExibirEdicaoContatoActivity"
+                android:label="@string/title_activity_exibir_edicao_contato"
+                android:parentActivityName=".MainActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="br.com.ramada.callboy.MainActivity" />
+        </activity>
     </application>
 
 
