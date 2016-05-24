@@ -78,12 +78,14 @@ public class ContatoDataAccess {
     }
 
     public Contato getContact(int id){
-        Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME, CAMPO_NUMERO}, CAMPO_ID +"=?",new String[] {String.valueOf(id)},null,null,null,null);
+        Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME, CAMPO_NUMERO},
+                            CAMPO_ID +"=?",new String[] {String.valueOf(id)},null,null,null,null);
         if(cursor!=null)
             cursor.moveToFirst();
         else
             return null;
         Contato contact = new Contato(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2));
+        cursor.close();
         return contact;
     }
 
@@ -107,6 +109,7 @@ public class ContatoDataAccess {
             }while(cursor.moveToNext());
         }else
             return null;
+        cursor.close();
         return contactList;
     }
 
@@ -140,6 +143,43 @@ public class ContatoDataAccess {
     }
 
 
+    // TODO: DEBUGGAR HARD
+    public Contato getContato(String nome, String numeroTelefone){
+        Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME, CAMPO_NUMERO},
+                                    CAMPO_NOME +"=?" + " and " + CAMPO_NUMERO + "=?",
+                                    new String[] {nome, numeroTelefone},
+                                    null,null,null,null);
+
+        if(cursor!=null) {
+            try{
+                Log.d("msg", "Tô nulo1");
+                cursor.moveToFirst();
+            }
+            catch (Exception e){
+                Log.d("excecption", e.getMessage());
+                return null;
+            }
+        }
+        else {
+            return null;
+        }
+        Contato contact = new Contato(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2));
+        cursor.close();
+        return contact;
+    }
+
+    public int getCount(String nome, String numeroTelefone){
+        String countQuery = "SELECT COUNT(*) AS COUNT FROM "+ TABELA_NOME + " WHERE " +
+                                CAMPO_NOME + " = '" + nome + "' AND " + CAMPO_NUMERO + " = '" + numeroTelefone +"' ;";
+
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if(cursor!=null)
+            cursor.moveToFirst();
+        else
+            return 0;
+        int count = Integer.parseInt(cursor.getString(0));
+        return count;
+    }
 
 
 

@@ -14,7 +14,7 @@ import br.com.ramada.callboy.model.Contato;
 public class Database extends SQLiteOpenHelper
 {
     protected static SQLiteDatabase BD;
-    private static final int DB_VERSION = 9;
+    private static final int DB_VERSION = 11;
     private static final String DB_NAME = "CallBoyDB";
 
     public static ContatoDataAccess contatoDAO;

@@ -39,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
             Log.d("msg", "Não tenho permissão");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+
         }
         else{
-            copiaAgenda();
             Log.d("msg", "Tenho permissão");
+            copiaAgenda();
         }
 
         super.onCreate(savedInstanceState);
@@ -115,24 +116,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void criarContatoTeste(){
 
-        Contato contato = new Contato("Raquel","992830552");
-        BD.contatoDAO.salvarContato(contato);
+        if(BD.contatoDAO.getCount("Raquel", "992830552") == 0){
+            Contato contato = new Contato("Raquel","992830552");
+            BD.contatoDAO.salvarContato(contato);
+        }
 
-        Grupo geral = new Grupo("Geral");
-        BD.grupoDAO.salvarGrupo(geral);
+        if(BD.grupoDAO.getCount("Geral") == 0){
+            Grupo geral = new Grupo("Geral");
+            BD.grupoDAO.salvarGrupo(geral);
+        }
 
-        Horario permanente = new Horario("Permanente");
-        BD.horarioDAO.salvarHorario(permanente);
+        if(BD.horarioDAO.getCount("Permanente") == 0){
+            Horario permanente = new Horario("Permanente");
+            BD.horarioDAO.salvarHorario(permanente);
+        }
 
     }
 
     private void populaListaContatos(){
         List<Contato> contatos = BD.contatoDAO.getAllContacts();
-
         List<String> nomesContatos = new ArrayList<>();
-        for(Contato c : contatos){
-            nomesContatos.add(c.getNome());
+
+        if(contatos != null){
+            for(Contato c : contatos){
+                nomesContatos.add(c.getNome());
+            }
         }
+
 
         ListView listView = (ListView) findViewById(R.id.listView_contatos);
         listView.setAdapter(new ArrayAdapter<String>(this,
@@ -164,8 +174,11 @@ public class MainActivity extends AppCompatActivity {
                     pCur.close();
                 }
 
-                Contato contato = new Contato(nome, numeroTelefone);
-                BD.contatoDAO.salvarContato(contato);
+
+                if(BD.contatoDAO.getCount(nome, numeroTelefone) == 0){
+                    Contato contato = new Contato(nome, numeroTelefone);
+                    BD.contatoDAO.salvarContato(contato);
+                }
             }
         }
 

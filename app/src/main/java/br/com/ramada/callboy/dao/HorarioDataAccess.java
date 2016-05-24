@@ -1,6 +1,7 @@
 package br.com.ramada.callboy.dao;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import br.com.ramada.callboy.model.Horario;
@@ -40,5 +41,36 @@ public class HorarioDataAccess {
         return id;
     }
 
+    // TODO: DEBUGGAR HARD
+    public Horario getHorario(String nome){
+        Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME},
+                CAMPO_NOME +"=?", new String[] {nome}, null,null,null,null);
+        if(cursor!=null)
+            try{
+                cursor.moveToFirst();
+            }
+            catch (Exception e){
+                Log.d("exc", e.getMessage());
+                return null;
+            }
+        else
+            return null;
+        Horario horario = new Horario(cursor.getString(1));
+        cursor.close();
+        return horario;
+    }
+
+    public int getCount(String nome){
+        String countQuery = "SELECT COUNT(*) AS COUNT FROM "+ TABELA_NOME + " WHERE " +
+                CAMPO_NOME + " = '" + nome + "';";
+
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if(cursor!=null)
+            cursor.moveToFirst();
+        else
+            return 0;
+        int count = Integer.parseInt(cursor.getString(0));
+        return count;
+    }
 
 }
