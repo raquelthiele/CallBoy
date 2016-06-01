@@ -92,6 +92,10 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
         CheckBox checkBoxBloquearSMS = (CheckBox) findViewById(R.id.checkBoxBloquearSMS);
         CheckBox checkBoxAnunciarSMS = (CheckBox) findViewById(R.id.checkBoxAnunciarSMS);
 
+        Log.d("Texto", contato.getNome());
+        Log.d("Texto", contato.getNumeroTelefone());
+
+
         nomeContato.setText(contato.getNome());
         numeroTelefone.setText(contato.getNumeroTelefone());
 
