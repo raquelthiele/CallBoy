@@ -69,6 +69,7 @@ public class AgendaDataAccess {
         values.put(CAMPO_BLOQUEIO_SMS, configuracao.isBloqueioSms());
         values.put(CAMPO_ANUNCIO_SMS, configuracao.isAnuncioSms());
 
+        // TODO: TESTAR ->  CAMPO_ID_CONTATO + " = " + contato.getId() + " " + CAMPO_ID_GRUPO + " = 1 " + CAMPO_ID_HORARIO + " = 1 ",   
         int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID_CONTATO + " = " + contato.getId(), null);
         return linhasAlteradas;
     }
