@@ -23,49 +23,101 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exibir_adicao_contato);
-        CheckBox repeatChkBx = ( CheckBox ) findViewById( R.id.checkBoxBloquearChamada );
-        repeatChkBx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+
+
+        CheckBox checkBloqueio = ( CheckBox ) findViewById( R.id.checkBoxBloquearChamada );
+        checkBloqueio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                validarCheckBoxDeChamadas(isChecked);
+                validarCheckBoxBloqueioDeChamadas(isChecked);
 
             }
         });
 
-        CheckBox checkSMS = ( CheckBox ) findViewById( R.id.checkBoxBloquearSMS );
-        checkSMS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        CheckBox checkAnuncio = ( CheckBox ) findViewById( R.id.checkBoxAnunciarChamada);
+        checkAnuncio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                validarCheckBoxDeSMS(isChecked);
+                validarCheckBoxAnuncioDeChamadas(isChecked);
+
+            }
+        });
+
+        CheckBox checkBloqueioSMS = ( CheckBox ) findViewById( R.id.checkBoxBloquearSMS );
+        checkBloqueioSMS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                validarCheckBoxBloqueioDeSMS(isChecked);
+
+            }
+        });
+
+        CheckBox checkAnuncioSMS = ( CheckBox ) findViewById( R.id.checkBoxAnunciarSMS );
+        checkAnuncioSMS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                validarCheckBoxAnuncioDeSMS(isChecked);
 
             }
         });
     }
 
-    private void validarCheckBoxDeChamadas(boolean isChecked) {
+    private void validarCheckBoxBloqueioDeChamadas(boolean isChecked) {
         if (isChecked)
         {
             CheckBox checkBoxDisabled = ( CheckBox ) findViewById( R.id.checkBoxAnunciarChamada );
             checkBoxDisabled.setEnabled(false);
+            checkBoxDisabled.setChecked(false);
 
         }else {
             CheckBox checkBoxEnable = ( CheckBox ) findViewById( R.id.checkBoxAnunciarChamada );
             checkBoxEnable.setEnabled(true);
         }
     }
+    private void validarCheckBoxAnuncioDeChamadas(boolean isChecked) {
+        if (isChecked)
+        {
+            CheckBox checkBoxDisabled = ( CheckBox ) findViewById( R.id.checkBoxBloquearChamada );
+            checkBoxDisabled.setEnabled(false);
+            checkBoxDisabled.setChecked(false);
 
-    private void validarCheckBoxDeSMS(boolean isChecked) {
+        }else {
+            CheckBox checkBoxEnable = ( CheckBox ) findViewById( R.id.checkBoxBloquearChamada );
+            checkBoxEnable.setEnabled(true);
+        }
+    }
+
+
+    private void validarCheckBoxBloqueioDeSMS(boolean isChecked) {
         if ( isChecked )
         {
             CheckBox checkBoxDisabled = ( CheckBox ) findViewById( R.id.checkBoxAnunciarSMS );
             checkBoxDisabled.setEnabled(false);
+            checkBoxDisabled.setChecked(false);
 
         }else {
             CheckBox checkBoxEnable = ( CheckBox ) findViewById( R.id.checkBoxAnunciarSMS );
+            checkBoxEnable.setEnabled(true);
+        }
+    }
+
+    private void validarCheckBoxAnuncioDeSMS(boolean isChecked) {
+        if ( isChecked )
+        {
+            CheckBox checkBoxDisabled = ( CheckBox ) findViewById( R.id.checkBoxBloquearSMS );
+            checkBoxDisabled.setEnabled(false);
+            checkBoxDisabled.setChecked(false);
+
+        }else {
+            CheckBox checkBoxEnable = ( CheckBox ) findViewById( R.id.checkBoxBloquearSMS );
             checkBoxEnable.setEnabled(true);
         }
     }
@@ -79,8 +131,12 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
         CheckBox checkBoxBloquearSMS = (CheckBox) findViewById(R.id.checkBoxBloquearSMS);
         CheckBox checkBoxAnunciarSMS = (CheckBox) findViewById(R.id.checkBoxAnunciarSMS);
 
-        Configuracao configuracao = new Configuracao(checkBoxBloquearChamada.isChecked(),checkBoxBloquearSMS.isChecked(),checkBoxAnunciarChamada.isChecked(),checkBoxAnunciarSMS.isChecked());
-        Contato novoContato= new Contato(nomeContato.getText().toString(),numeroTelefone.getText().toString()/*,configuracao*/);
+        Configuracao configuracao = new Configuracao(checkBoxBloquearChamada.isChecked(),
+                                                        checkBoxBloquearSMS.isChecked(),
+                                                        checkBoxAnunciarChamada.isChecked(),
+                                                        checkBoxAnunciarSMS.isChecked());
+        Contato novoContato= new Contato(nomeContato.getText().toString(),numeroTelefone.getText().toString()
+                                        /*,configuracao*/);
         int idNovoContato = BD.contatoDAO.salvarContato(novoContato);
 
         novoContato.setId(idNovoContato);

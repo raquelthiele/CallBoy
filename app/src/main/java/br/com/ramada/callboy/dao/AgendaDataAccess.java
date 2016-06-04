@@ -1,6 +1,7 @@
 package br.com.ramada.callboy.dao;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import br.com.ramada.callboy.model.Configuracao;
@@ -72,6 +73,35 @@ public class AgendaDataAccess {
         // TODO: TESTAR ->  CAMPO_ID_CONTATO + " = " + contato.getId() + " " + CAMPO_ID_GRUPO + " = 1 " + CAMPO_ID_HORARIO + " = 1 ",   
         int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID_CONTATO + " = " + contato.getId(), null);
         return linhasAlteradas;
+    }
+
+    public Configuracao getConfiguracao(int idContato/*, int idGrupo, int idHorario*/){
+        Cursor cursor = db.query(TABELA_NOME,
+                new String[] {CAMPO_ID_CONTATO, CAMPO_ID_GRUPO, CAMPO_ID_HORARIO,
+                CAMPO_BLOQUEIO_CHAMADA, CAMPO_ANUNCIO_CHAMADA, CAMPO_BLOQUEIO_SMS, CAMPO_ANUNCIO_SMS},
+                CAMPO_ID_CONTATO +"=?"/* + CAMPO_ID_GRUPO + "=?" + CAMPO_ID_HORARIO + "=?"*/,
+                new String[] {String.valueOf(idContato)/*,String.valueOf(idGrupo),
+                        String.valueOf(idHorario)*/},
+                null,null,null,null);
+
+        if(cursor!=null)
+            cursor.moveToFirst();
+        else
+            return null;
+        Configuracao config = new Configuracao(obterBooleanDeInt(cursor.getInt(3)),
+                                                obterBooleanDeInt(cursor.getInt(5)),
+                                                obterBooleanDeInt(cursor.getInt(4)),
+                                                obterBooleanDeInt(cursor.getInt(6)));
+        cursor.close();
+        return config;
+    }
+
+    private boolean obterBooleanDeInt(int i){
+        if(i == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

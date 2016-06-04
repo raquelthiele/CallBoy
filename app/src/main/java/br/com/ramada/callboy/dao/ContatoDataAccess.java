@@ -3,6 +3,7 @@ package br.com.ramada.callboy.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import br.com.ramada.callboy.model.Contato;
@@ -171,7 +172,9 @@ public class ContatoDataAccess {
 
     public int getCount(String nome, String numeroTelefone){
         String countQuery = "SELECT COUNT(*) AS COUNT FROM "+ TABELA_NOME + " WHERE " +
-                CAMPO_NOME + " = '" + nome + "' AND " + CAMPO_NUMERO + " = '" + numeroTelefone +"' ;";
+                CAMPO_NOME + " = " + DatabaseUtils.sqlEscapeString(nome) + " AND " +
+                CAMPO_NUMERO + " = " + DatabaseUtils.sqlEscapeString(numeroTelefone) +" ;";
+
 
         Cursor cursor = db.rawQuery(countQuery, null);
         if(cursor!=null)
