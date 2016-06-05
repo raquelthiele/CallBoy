@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
+import br.com.ramada.callboy.model.Grupo;
+import br.com.ramada.callboy.model.Horario;
 
 /**
  * Created by danie on 22/05/2016.
@@ -47,12 +49,12 @@ public class AgendaDataAccess {
         this.db = db;
     }
 
-    public long salvarConfiguracao(Contato contato, Configuracao configuracao){
+    public long salvarConfiguracao(Contato contato, Grupo grupo, Horario horario, Configuracao configuracao){
 
         ContentValues values = new ContentValues();
         values.put(CAMPO_ID_CONTATO, contato.getId());
-        values.put(CAMPO_ID_GRUPO, 1);
-        values.put(CAMPO_ID_HORARIO, 1);
+        values.put(CAMPO_ID_GRUPO, grupo.getId());
+        values.put(CAMPO_ID_HORARIO, horario.getId());
         values.put(CAMPO_BLOQUEIO_CHAMADA, configuracao.isBloqueioChamada());
         values.put(CAMPO_ANUNCIO_CHAMADA, configuracao.isAnuncioChamada());
         values.put(CAMPO_BLOQUEIO_SMS, configuracao.isBloqueioSms());
@@ -84,10 +86,17 @@ public class AgendaDataAccess {
                         String.valueOf(idHorario)*/},
                 null,null,null,null);
 
-        if(cursor!=null)
-            cursor.moveToFirst();
+        if(cursor.getCount() != 0)
+            try{
+                cursor.moveToFirst();
+            }
+            catch (Exception e){
+                Log.d("exc", e.getMessage());
+                return null;
+            }
         else
             return null;
+
         Configuracao config = new Configuracao(obterBooleanDeInt(cursor.getInt(3)),
                                                 obterBooleanDeInt(cursor.getInt(5)),
                                                 obterBooleanDeInt(cursor.getInt(4)),

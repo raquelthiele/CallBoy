@@ -9,6 +9,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
+import br.com.ramada.callboy.model.Grupo;
+import br.com.ramada.callboy.model.Horario;
 
 import static br.com.ramada.callboy.CallBoy.BD;
 
@@ -149,31 +151,24 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
         nomeContato.setText(contato.getNome());
         numeroTelefone.setText(contato.getNumeroTelefone());
 
-        if(contato.getConfiguracao().isBloqueioChamada()){
-            checkBoxBloquearChamada.setChecked(contato.getConfiguracao().isBloqueioChamada());
-            validarCheckBoxBloqueioDeChamadas(contato.getConfiguracao().isBloqueioChamada());
+        if(contato.getConfiguracao() != null){
+            if(contato.getConfiguracao().isBloqueioChamada()){
+                checkBoxBloquearChamada.setChecked(contato.getConfiguracao().isBloqueioChamada());
+                validarCheckBoxBloqueioDeChamadas(contato.getConfiguracao().isBloqueioChamada());
+            }
+            else if(contato.getConfiguracao().isAnuncioChamada()){
+                checkBoxAnunciarChamada.setChecked(contato.getConfiguracao().isAnuncioChamada());
+                validarCheckBoxAnuncioDeChamadas(contato.getConfiguracao().isAnuncioChamada());
+            }
+            if(contato.getConfiguracao().isBloqueioSms()){
+                checkBoxBloquearSMS.setChecked(contato.getConfiguracao().isBloqueioSms());
+                validarCheckBoxBloqueioDeSMS(contato.getConfiguracao().isBloqueioSms());
+            }
+            else if(contato.getConfiguracao().isAnuncioSms()){
+                checkBoxAnunciarSMS.setChecked(contato.getConfiguracao().isAnuncioSms());
+                validarCheckBoxAnuncioDeSMS(contato.getConfiguracao().isBloqueioSms());
+            }
         }
-        else if(contato.getConfiguracao().isAnuncioChamada()){
-            checkBoxAnunciarChamada.setChecked(contato.getConfiguracao().isAnuncioChamada());
-            validarCheckBoxAnuncioDeChamadas(contato.getConfiguracao().isAnuncioChamada());
-        }
-        if(contato.getConfiguracao().isBloqueioSms()){
-            checkBoxBloquearSMS.setChecked(contato.getConfiguracao().isBloqueioSms());
-            validarCheckBoxBloqueioDeSMS(contato.getConfiguracao().isBloqueioSms());
-        }
-        else if(contato.getConfiguracao().isAnuncioSms()){
-            checkBoxAnunciarSMS.setChecked(contato.getConfiguracao().isAnuncioSms());
-            validarCheckBoxAnuncioDeSMS(contato.getConfiguracao().isBloqueioSms());
-        }
-
-
-
-        /*
-        checkBoxBloquearChamada.setActivated(contato.getConfiguracao().isBloqueioChamada());
-        checkBoxAnunciarChamada.setActivated(contato.getConfiguracao().isAnuncioChamada());
-        checkBoxBloquearSMS.setActivated(contato.getConfiguracao().isBloqueioSms());
-        checkBoxAnunciarSMS.setActivated(contato.getConfiguracao().isAnuncioSms());
-        */
     }
 
     public void atualizarContato(View view){
@@ -190,6 +185,8 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
         int idNovoContato = BD.contatoDAO.atualizarContato(novoContato);
 
         novoContato.setId(idNovoContato);
+        Grupo grupo = BD.grupoDAO.getGrupo(1);
+        Horario horario = BD.horarioDAO.getHorario(1);
         BD.agendaDAO.atualizarConfiguracao(novoContato, configuracao);
 
     }

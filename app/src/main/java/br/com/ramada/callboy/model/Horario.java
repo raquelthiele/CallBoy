@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class Horario {
 
+    private int id;
     private String nome;
     private List<FaixaHoraria> faixasHorarias;
 
@@ -20,8 +21,20 @@ public class Horario {
     }
 
     public Horario(String nome) {
-
         this.nome = nome;
+    }
+
+    public Horario(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {

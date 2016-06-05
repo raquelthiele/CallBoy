@@ -39,6 +39,26 @@ public class GrupoDataAccess {
         return id;
     }
 
+
+    public Grupo getGrupo(int idGrupo){
+        Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME},
+                CAMPO_ID +"=?", new String[] {String.valueOf(idGrupo)}, null,null,null,null);
+        if(cursor!=null)
+            try{
+                cursor.moveToFirst();
+            }
+            catch (Exception e){
+                Log.d("exc", e.getMessage());
+                return null;
+            }
+        else
+            return null;
+        Grupo grupo = new Grupo(cursor.getInt(0),cursor.getString(1));
+        cursor.close();
+        return grupo;
+    }
+
+
     // TODO: DEBUGGAR HARD
     public Grupo getGrupo(String nome){
         Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME},

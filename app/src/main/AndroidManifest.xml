@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".CallBoy"
@@ -42,6 +43,13 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="br.com.ramada.callboy.MainActivity" />
         </activity>
+
+
+        <receiver android:name="br.com.ramada.callboy.ChamadaReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 

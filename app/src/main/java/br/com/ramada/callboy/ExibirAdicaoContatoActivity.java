@@ -14,6 +14,8 @@ import android.widget.EditText;
 import br.com.ramada.callboy.dao.ContatoDataAccess;
 import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
+import br.com.ramada.callboy.model.Grupo;
+import br.com.ramada.callboy.model.Horario;
 
 import static br.com.ramada.callboy.CallBoy.BD;
 
@@ -140,7 +142,9 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
         int idNovoContato = BD.contatoDAO.salvarContato(novoContato);
 
         novoContato.setId(idNovoContato);
-        BD.agendaDAO.salvarConfiguracao(novoContato, configuracao);
+        Grupo grupo = BD.grupoDAO.getGrupo(1);
+        Horario horario = BD.horarioDAO.getHorario(1);
+        BD.agendaDAO.salvarConfiguracao(novoContato, grupo, horario,configuracao);
     }
 
 }

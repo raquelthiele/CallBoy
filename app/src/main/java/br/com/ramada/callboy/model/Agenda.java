@@ -1,8 +1,6 @@
 package br.com.ramada.callboy.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Ramada on 21/05/2016.
@@ -26,7 +24,15 @@ public class Agenda {
     }
 
 
-    public List<Contato> getContatos() {
+    public List<Contato> getContatos(){
+        List<Contato> contatos = new ArrayList<>();
+        Set<Identificador> identificadores = agendamento.keySet();
+        Iterator<Identificador> iterator = identificadores.iterator();
+
+        while(iterator.hasNext()){
+            contatos.add(iterator.next().getContato());
+        }
+
         return contatos;
     }
 
@@ -58,10 +64,10 @@ public class Agenda {
         this.horarios = horarios;
     }
 
-    public void adicionaConfiguracao(Contato contato, Configuracao configuracao /*, Modo modo*/) {
-        Identificador identificador = new Identificador(contato.getId(),1,1);
+    public void adicionaConfiguracao(Contato contato, Grupo grupo, Horario horario,
+                                     Configuracao configuracao /*, Modo modo*/) {
+        Identificador identificador = new Identificador(contato,grupo,horario);
         agendamento.put(identificador,configuracao);
-
     }
 
     public void adicionaConfiguracao(Grupo grupo, boolean bloqueioChamada, boolean anuncioChamada, boolean bloqueioSms, boolean anuncioSms, Modo modo) {
@@ -94,14 +100,38 @@ public class Agenda {
 
 
     private static class Identificador{
-        private int idContato;
-        private int idGrupo;
-        private int idHorario;
+        private Contato contato;
+        private Grupo grupo;
+        private Horario horario;
 
-        public Identificador(int idContato, int idGrupo, int idHorario) {
-            this.idContato = idContato;
-            this.idGrupo = idGrupo;
-            this.idHorario = idHorario;
+        protected Identificador(Contato contato, Grupo grupo, Horario horario) {
+            this.contato = contato;
+            this.grupo = grupo;
+            this.horario = horario;
+        }
+
+        protected Contato getContato() {
+            return contato;
+        }
+
+        protected void setContato(Contato contato) {
+            this.contato = contato;
+        }
+
+        protected Grupo getGrupo() {
+            return grupo;
+        }
+
+        protected void setGrupo(Grupo grupo) {
+            this.grupo = grupo;
+        }
+
+        protected Horario getHorario() {
+            return horario;
+        }
+
+        protected void setHorario(Horario horario) {
+            this.horario = horario;
         }
     }
 
