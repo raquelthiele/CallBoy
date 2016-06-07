@@ -9,6 +9,7 @@ import br.com.ramada.callboy.model.Contato;
 
 /**
  * Classe responsavel pela criacao do banco e tabelas
+ *
  * Created by Ramada on 21/05/2016.
  */
 public class Database extends SQLiteOpenHelper
@@ -43,7 +44,6 @@ public class Database extends SQLiteOpenHelper
     // NÃO TÁ PEGANDO, VOU ALI ME MATAR E JÁ VOLTO :(
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //db.execSQL(CREATE_DB);
         db.execSQL("PRAGMA foreign_keys = ON;");
         db.execSQL(contatoDAO.CREATE_TABELA);
         Log.d("msg",contatoDAO.CREATE_TABELA);
@@ -57,11 +57,13 @@ public class Database extends SQLiteOpenHelper
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL(UPDATE_DB);
+        //Deleta as tabelas antigas
         db.execSQL(contatoDAO.DROP_TABELA);
         db.execSQL(grupoDAO.DROP_TABELA);
         db.execSQL(horarioDAO.DROP_TABELA);
         db.execSQL(agendaDAO.DROP_TABELA);
+
+        //Cria tudo de novo
         onCreate(db);
     }
 

@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">CallBoy</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
     <string name="title_activity_exibir_adicao_contato">ExibirAdicaoContatoActivity</string>
     <string name="title_activity_exibir_edicao_contato">ExibirEdicaoContatoActivity</string>
+    <string name="no_notes">Desculpa, não há contatos</string>
+    <string name="menu_insert">Adicione um novo contato</string>
+    <string name="menu_delete">Exclua contato</string>
+    <string name="label_name">Nome</string>
+    <string name="label_address">Telefone</string>
+    <string name="title_activity_menu_lateral">MenuLateralActivity</string>
+    <string name="navigation_drawer_open">Abrir Menu</string>
+    <string name="navigation_drawer_close">Fechar Menu</string>
 </resources>

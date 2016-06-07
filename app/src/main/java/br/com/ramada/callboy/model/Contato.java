@@ -13,21 +13,27 @@ public class Contato {
     private Configuracao configuracao;
     private List<Grupo> grupos;
 
-
-    public Contato(String nome, String numeroTelefone/*, Configuracao configuracao*/) {
-        this.nome = nome;
-        this.numeroTelefone = numeroTelefone;
-        //this.configuracao = configuracao;
-    }
-
     public Contato() {
 
     }
+
+    public Contato(String nome, String numeroTelefone) {
+        this.nome = nome;
+        this.numeroTelefone = numeroTelefone;
+    }
+
 
     public Contato(Integer id, String nome, String numeroTelefone) {
         this.id = id;
         this.nome = nome;
         this.numeroTelefone = numeroTelefone;
+    }
+
+    public Contato(Integer id, String nome, String numeroTelefone, Configuracao configuracao) {
+        this.id = id;
+        this.nome = nome;
+        this.numeroTelefone = numeroTelefone;
+        this.configuracao = configuracao;
     }
 
     public String getNome() {
@@ -49,6 +55,7 @@ public class Contato {
     public void adicionarGrupo(Grupo grupo){}
 
     public void removerGrupo(Grupo grupo){}
+
     public List<Grupo> getGrupos() {
         return grupos;
     }

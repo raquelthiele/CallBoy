@@ -2,7 +2,6 @@ package br.com.ramada.callboy.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -184,7 +183,7 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
         Configuracao configuracao = new Configuracao(checkBoxBloquearChamada.isChecked(),checkBoxBloquearSMS.isChecked(),checkBoxAnunciarChamada.isChecked(),checkBoxAnunciarSMS.isChecked());
         Contato novoContato= new Contato(this.idContato,nomeContato.getText().toString(),
                                             numeroTelefone.getText().toString()/*,configuracao*/);
-        int idNovoContato = BD.contatoDAO.atualizarContato(novoContato);
+        int idNovoContato = BD.contatoDAO.updateContato(novoContato);
 
         novoContato.setId(idNovoContato);
         Grupo grupo = BD.grupoDAO.getGrupo(1);

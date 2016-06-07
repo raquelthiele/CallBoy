@@ -1,10 +1,7 @@
 package br.com.ramada.callboy.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -12,7 +9,6 @@ import android.widget.EditText;
 
 //import br.com.ramada.callboy.dao.BancoDeDados;
 import br.com.ramada.callboy.R;
-import br.com.ramada.callboy.dao.ContatoDataAccess;
 import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
 import br.com.ramada.callboy.model.Grupo;
@@ -26,7 +22,6 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exibir_adicao_contato);
-
 
         CheckBox checkBloqueio = ( CheckBox ) findViewById( R.id.checkBoxBloquearChamada );
         checkBloqueio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -140,7 +135,7 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
                                                         checkBoxAnunciarSMS.isChecked());
         Contato novoContato= new Contato(nomeContato.getText().toString(),numeroTelefone.getText().toString()
                                         /*,configuracao*/);
-        int idNovoContato = BD.contatoDAO.salvarContato(novoContato);
+        int idNovoContato = BD.contatoDAO.addContato(novoContato);
 
         novoContato.setId(idNovoContato);
         Grupo grupo = BD.grupoDAO.getGrupo(1);

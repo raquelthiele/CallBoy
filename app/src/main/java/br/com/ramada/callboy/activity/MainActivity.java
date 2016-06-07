@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(BD.contatoDAO.getCount("Raquel", "992830552") == 0){
             Contato contato = new Contato("Raquel","992830552");
-            BD.contatoDAO.salvarContato(contato);
+            BD.contatoDAO.addContato(contato);
         }
 
         if(BD.grupoDAO.getCount("Geral") == 0){
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(BD.contatoDAO.getCount(nome, numeroTelefone) == 0){
                     Contato contato = new Contato(nome, numeroTelefone);
-                    BD.contatoDAO.salvarContato(contato);
+                    BD.contatoDAO.addContato(contato);
                 }
             }
         }

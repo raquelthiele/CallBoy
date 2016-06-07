@@ -35,24 +35,36 @@
                 android:value=".activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.ExibirEdicaoContatoActivity"
-                android:label="@string/title_activity_exibir_edicao_contato"
-                android:parentActivityName=".activity.MainActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.ExibirEdicaoContatoActivity"
+            android:label="@string/title_activity_exibir_edicao_contato"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
         </activity>
 
-
-        <receiver android:name="br.com.ramada.callboy.ChamadaReceiver" >
+        <receiver android:name=".ChamadaReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".activity.MenuLateralActivity"
+            android:label="@string/title_activity_menu_lateral"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.ramada.callboy.activity.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
-
-
-
 
 </manifest>

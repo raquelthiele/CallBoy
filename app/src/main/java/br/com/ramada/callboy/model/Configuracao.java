@@ -1,7 +1,7 @@
 package br.com.ramada.callboy.model;
 
 /**
- * Created by PRUP-16 on 21/05/2016.
+ * Created by Ramada on 21/05/2016.
  */
 public class Configuracao {
 

@@ -39,16 +39,11 @@ public class ContatoDataAccess {
 
     protected static final String DROP_TABELA = "DROP TABLE IF EXISTS " + TABELA_NOME + " ;";
 
-
-
     public ContatoDataAccess(SQLiteDatabase db){
         this.db = db;
     }
 
-
-
-    public int salvarContato(Contato contato){
-      //  limparBanco();
+    public int addContato(Contato contato){
         Log.d("msg","contato adicionado");
         ContentValues values = new ContentValues();
         values.put(CAMPO_NOME, contato.getNome());
@@ -58,29 +53,14 @@ public class ContatoDataAccess {
         //values.put(CAMPO_BLOQ_SMS, obterIntDeBooleano(contato.getConfiguracao().isBloqueioSms()));
         //values.put(CAMPO_ANUNCIA_SMS, obterIntDeBooleano(contato.getConfiguracao().isAnuncioSms()));
 
+        //Inserindo o contato
         int id = (int) db.insert(TABELA_NOME, null, values);
         return id;
     }
 
-    private int obterIntDeBooleano(boolean b){
-        if(b){
-            return 1;
-        }else {
-            return 0;
-        }
-    }
-
-    private boolean obterBooleanDeInt(int i){
-        if(i == 1){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     public Contato getContato(int id){
         Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME, CAMPO_NUMERO},
-                            CAMPO_ID +"=?",new String[] {String.valueOf(id)},null,null,null,null);
+                CAMPO_ID +"=?",new String[] {String.valueOf(id)},null,null,null,null);
         if(cursor!=null)
             cursor.moveToFirst();
         else
@@ -94,6 +74,7 @@ public class ContatoDataAccess {
         List<Contato> contactList = new ArrayList<Contato>();
         String selectQuery = "SELECT * FROM " + TABELA_NOME +" ORDER BY "+ CAMPO_NOME +" ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
+        //Construindo a lista
         if(cursor.moveToFirst()){
             do{
                 Contato contato = new Contato();
@@ -112,6 +93,51 @@ public class ContatoDataAccess {
             return null;
         cursor.close();
         return contactList;
+    }
+
+    public int getContactsCount() {
+        String countQuery = "SELECT  * FROM " + TABELA_NOME;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+        return cursor.getCount();
+    }
+
+    public int updateContato(Contato contato){
+        Log.d("msg","contato adicionado");
+        ContentValues values = new ContentValues();
+        values.put(CAMPO_NOME, contato.getNome());
+        values.put(CAMPO_NUMERO, contato.getNumeroTelefone());
+        //values.put(CAMPO_BLOQ_CHAMADA, obterIntDeBooleano(contato.getConfiguracao().isBloqueioChamada()));
+        //values.put(CAMPO_ANUNC_CHAMADA, obterIntDeBooleano(contato.getConfiguracao().isAnuncioChamada()));
+        //values.put(CAMPO_BLOQ_SMS, obterIntDeBooleano(contato.getConfiguracao().isBloqueioSms()));
+        //values.put(CAMPO_ANUNCIA_SMS, obterIntDeBooleano(contato.getConfiguracao().isAnuncioSms()));
+
+        int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID + " = ? " + contato.getId(), null);
+        return linhasAlteradas;
+    }
+
+    public void deleteContato(Contato contato){
+        db.delete(TABELA_NOME, CAMPO_ID + " = ? " + contato.getId(), null);
+    }
+
+
+
+
+
+    private int obterIntDeBooleano(boolean b){
+        if(b){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+
+    private boolean obterBooleanDeInt(int i){
+        if(i == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public List<String> getAllNumbers(){
@@ -139,12 +165,6 @@ public class ContatoDataAccess {
         return count;
     }
 
-    public void deleteContact(long id){
-        db.delete(TABELA_NOME, CAMPO_ID +"=?", new String[] {String.valueOf(id)});
-    }
-
-
-    // TODO: DEBUGGAR HARD
     public Contato getContato(String nome, String numeroTelefone){
         Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME, CAMPO_NUMERO},
                                     CAMPO_NOME +"=?" + " and " + CAMPO_NUMERO + "=?",
@@ -168,7 +188,6 @@ public class ContatoDataAccess {
         cursor.close();
         return contact;
     }
-
 
     public int getCount(String nome, String numeroTelefone){
         String countQuery = "SELECT COUNT(*) AS COUNT FROM "+ TABELA_NOME + " WHERE " +
@@ -197,21 +216,4 @@ public class ContatoDataAccess {
         int count = Integer.parseInt(cursor.getString(0));
         return count;
     }
-
-    public int atualizarContato(Contato contato){
-        Log.d("msg","contato adicionado");
-        ContentValues values = new ContentValues();
-        values.put(CAMPO_NOME, contato.getNome());
-        values.put(CAMPO_NUMERO, contato.getNumeroTelefone());
-        //values.put(CAMPO_BLOQ_CHAMADA, obterIntDeBooleano(contato.getConfiguracao().isBloqueioChamada()));
-        //values.put(CAMPO_ANUNC_CHAMADA, obterIntDeBooleano(contato.getConfiguracao().isAnuncioChamada()));
-        //values.put(CAMPO_BLOQ_SMS, obterIntDeBooleano(contato.getConfiguracao().isBloqueioSms()));
-        //values.put(CAMPO_ANUNCIA_SMS, obterIntDeBooleano(contato.getConfiguracao().isAnuncioSms()));
-
-        int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID + " = " + contato.getId(), null);
-        return linhasAlteradas;
-    }
-
-
-
 }
