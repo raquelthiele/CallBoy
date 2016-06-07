@@ -1,5 +1,5 @@
 
-package br.com.ramada.callboy;
+package br.com.ramada.callboy.activity;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -23,6 +23,7 @@ import android.widget.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.ramada.callboy.R;
 import br.com.ramada.callboy.model.Contato;
 import br.com.ramada.callboy.model.Grupo;
 import br.com.ramada.callboy.model.Horario;

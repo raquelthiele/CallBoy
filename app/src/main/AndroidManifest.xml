@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,22 +26,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ExibirAdicaoContatoActivity"
+            android:name=".activity.ExibirAdicaoContatoActivity"
             android:label="@string/title_activity_exibir_adicao_contato"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.ramada.callboy.MainActivity" />
+                android:value=".activity.MainActivity" />
         </activity>
         <activity
-                android:name=".ExibirEdicaoContatoActivity"
+                android:name=".activity.ExibirEdicaoContatoActivity"
                 android:label="@string/title_activity_exibir_edicao_contato"
-                android:parentActivityName=".MainActivity"
+                android:parentActivityName=".activity.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="br.com.ramada.callboy.MainActivity" />
+                    android:value=".activity.MainActivity" />
         </activity>
 
 
