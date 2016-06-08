@@ -11,4 +11,5 @@
     <string name="title_activity_menu_lateral">MenuLateralActivity</string>
     <string name="navigation_drawer_open">Abrir Menu</string>
     <string name="navigation_drawer_close">Fechar Menu</string>
+    <string name="title_activity_barra_lateral">BarraLateralActivity</string>
 </resources>

@@ -51,19 +51,13 @@
         </receiver>
 
         <activity
-            android:name=".activity.MenuLateralActivity"
-            android:label="@string/title_activity_menu_lateral"
+            android:name=".activity.BarraLateralActivity"
+            android:label="@string/title_activity_barra_lateral"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.ramada.callboy.activity.MainActivity" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

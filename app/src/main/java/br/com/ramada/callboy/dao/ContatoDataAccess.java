@@ -116,6 +116,7 @@ public class ContatoDataAccess {
         return linhasAlteradas;
     }
 
+
     public void deleteContato(Contato contato){
         db.delete(TABELA_NOME, CAMPO_ID + " = ? " + contato.getId(), null);
     }
@@ -173,7 +174,7 @@ public class ContatoDataAccess {
 
         if(cursor!=null) {
             try{
-                Log.d("msg", "Tô nulo1");
+                Log.d("msg", "Tô nulo");
                 cursor.moveToFirst();
             }
             catch (Exception e){
@@ -216,4 +217,39 @@ public class ContatoDataAccess {
         int count = Integer.parseInt(cursor.getString(0));
         return count;
     }
+
+    public Contato getContato(String numeroTelefone){
+        Log.d("msg", numeroTelefone);
+        Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME, CAMPO_NUMERO},
+                CAMPO_NUMERO + "=?",
+                new String[] {numeroTelefone},
+                null,null,null,null);
+
+        if(cursor!=null) {
+            try{
+                Log.d("msg", "Tô nulo1");
+                cursor.moveToFirst();
+                if(cursor.isNull(0)){
+                    Log.d("msg","tá feio");
+
+
+                }
+                else{
+                    Log.d("msg", "tá feio demais");
+
+                }
+            }
+            catch (Exception e){
+                Log.d("msg", e.getMessage());
+                return null;
+            }
+        }
+        else {
+            return null;
+        }
+        Contato contact = new Contato(cursor.getInt(0),cursor.getString(1),cursor.getString(2));
+        cursor.close();
+        return contact;
+    }
+
 }
