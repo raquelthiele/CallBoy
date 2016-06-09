@@ -1,5 +1,6 @@
 package br.com.ramada.callboy.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
 
         int idContato = getIntent().getIntExtra("idContato", 0);
         this.idContato = idContato;
+        Log.d("msgIDCONTATO", String.valueOf(this.idContato));
 
         if(idContato != 0){
             if(BD.contatoDAO.getCount(idContato) != 0){
@@ -186,14 +188,17 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
                                             numeroTelefone.getText().toString()/*,configuracao*/);
         Log.d("DEBUG", novoContato.getNome());
         Log.d("DEBUG", novoContato.getNumeroTelefone());
-        int idNovoContato = BD.contatoDAO.updateContato(novoContato);
 
-        novoContato.setId(idNovoContato);
+        BD.contatoDAO.updateContato(novoContato);
         Grupo grupo = BD.grupoDAO.getGrupo(1);
         Horario horario = BD.horarioDAO.getHorario(1);
         BD.agendaDAO.atualizarConfiguracao(novoContato, configuracao);
 
+        this.finish();
+
     }
+
+
 
 
 

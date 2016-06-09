@@ -31,33 +31,13 @@ public class ChamadaReceiver extends BroadcastReceiver {
 
                 Contato contato = CallBoy.BD.contatoDAO.getContato(incomingNumber);
 
-                try {
-                    Log.d("msg", "" + contato.getId());
-                    Log.d("msg", contato.getNome());
-                    Log.d("msg", contato.getNumeroTelefone());
-                }
-                catch (Exception e){
-                    Log.d("msgexception", e.getMessage());
-                    e.printStackTrace();
-                }
-
-
                 if(contato != null){
-                    Log.d("msg", String.valueOf(contato.getId()));
-                    Log.d("msg", contato.getNome());
-                    Log.d("msg", contato.getNumeroTelefone());
                     contato.setConfiguracao(CallBoy.BD.agendaDAO.getConfiguracao(contato));
-                    if(contato.getConfiguracao() != null){
-                        Log.d("msgconfig", String.valueOf(contato.getConfiguracao().isBloqueioChamada()));
-                    }
                 }
                 else {
                     contato = new Contato();
                     contato.setConfiguracao(new Configuracao(false,false,false,false));
                 }
-
-
-
 
                 switch (state) {
                     case TelephonyManager.CALL_STATE_RINGING:

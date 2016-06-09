@@ -141,6 +141,8 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
         Grupo grupo = BD.grupoDAO.getGrupo(1);
         Horario horario = BD.horarioDAO.getHorario(1);
         BD.agendaDAO.salvarConfiguracao(novoContato, grupo, horario,configuracao);
+
+        this.finish();
     }
 
 }

@@ -112,7 +112,7 @@ public class ContatoDataAccess {
         //values.put(CAMPO_BLOQ_SMS, obterIntDeBooleano(contato.getConfiguracao().isBloqueioSms()));
         //values.put(CAMPO_ANUNCIA_SMS, obterIntDeBooleano(contato.getConfiguracao().isAnuncioSms()));
 
-        int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID + " = ? " + contato.getId(), null);
+        int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID + " = " + contato.getId(), null);
         return linhasAlteradas;
     }
 

@@ -34,11 +34,11 @@ public class AgendaDataAccess {
                     CAMPO_BLOQUEIO_SMS + " BOOLEAN DEFAULT '0' NULL, " +
                     CAMPO_ANUNCIO_SMS + " BOOLEAN DEFAULT '0' NULL, " +
                     " FOREIGN KEY( " + CAMPO_ID_CONTATO + " ) REFERENCES " + ContatoDataAccess.TABELA_NOME +
-                    "( " + ContatoDataAccess.CAMPO_ID + " ) ON UPDATE CASCADE ON DELETE CASCADE " +
+                    "( " + ContatoDataAccess.CAMPO_ID + " ) ON DELETE CASCADE " +
                     " FOREIGN KEY( " + CAMPO_ID_GRUPO + " ) REFERENCES " + GrupoDataAccess.TABELA_NOME +
-                    "( " + GrupoDataAccess.CAMPO_ID + " ) ON UPDATE CASCADE ON DELETE CASCADE " +
+                    "( " + GrupoDataAccess.CAMPO_ID + " ) ON DELETE CASCADE " +
                     " FOREIGN KEY( " + CAMPO_ID_HORARIO + " ) REFERENCES " + HorarioDataAccess.TABELA_NOME +
-                    "( " + HorarioDataAccess.CAMPO_ID + " ) ON UPDATE CASCADE ON DELETE CASCADE " +
+                    "( " + HorarioDataAccess.CAMPO_ID + " ) ON DELETE CASCADE " +
                     " PRIMARY KEY( " + CAMPO_ID_CONTATO + " , " + CAMPO_ID_GRUPO + " , " + CAMPO_ID_HORARIO + " )" +
                     " );" ;
 
@@ -64,16 +64,45 @@ public class AgendaDataAccess {
         return id;
     }
 
-    public int atualizarConfiguracao(Contato contato, Configuracao configuracao){
-        Log.d("msg","contato adicionado");
+    // TODO: some serious need of debugging
+    public int atualizarConfiguracao(Contato contato, /*Grupo grupo, Horario horario,*/ Configuracao configuracao){
+        Log.d("msg","contato atualizado");
+        getConfiguracao(contato);
+        Log.d("msgUPDATECONTATO", String.valueOf(contato.getId()) );
+        Log.d("msgUPDATECONTATO", String.valueOf(contato.getNome()));
+        Log.d("msgUPDATECONTATO", String.valueOf(contato.getNumeroTelefone()));
+        Log.d("msgUPDATE", String.valueOf(configuracao.isBloqueioChamada()) );
+        Log.d("msgUPDATE", String.valueOf(configuracao.isAnuncioChamada()));
+        Log.d("msgUPDATE", String.valueOf(configuracao.isBloqueioSms()));
+        Log.d("msgUPDATE", String.valueOf(configuracao.isAnuncioSms()));
         ContentValues values = new ContentValues();
         values.put(CAMPO_BLOQUEIO_CHAMADA, configuracao.isBloqueioChamada());
         values.put(CAMPO_ANUNCIO_CHAMADA, configuracao.isAnuncioChamada());
         values.put(CAMPO_BLOQUEIO_SMS, configuracao.isBloqueioSms());
         values.put(CAMPO_ANUNCIO_SMS, configuracao.isAnuncioSms());
 
-        // TODO: TESTAR ->  CAMPO_ID_CONTATO + " = " + contato.getId() + " " + CAMPO_ID_GRUPO + " = 1 " + CAMPO_ID_HORARIO + " = 1 ",   
-        int linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID_CONTATO + " = " + contato.getId(), null);
+        // TODO: TESTAR ->  CAMPO_ID_CONTATO + " = " + contato.getId() + " " +
+        // CAMPO_ID_GRUPO + " = 1 " + CAMPO_ID_HORARIO + " = 1 ",
+        int linhasAlteradas = 0;
+        try{
+            linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID_CONTATO + " = " + contato.getId(), null);
+            Log.d("msgSQL", linhasAlteradas + " linhas alteradas");
+
+        }
+        catch (Exception e){
+            Log.d("msgSQL", e.getMessage());
+            e.printStackTrace();
+        }
+
+        if(linhasAlteradas > 0){
+            Configuracao novaConfig = getConfiguracao(contato);
+            Log.d("msgUPDATE", String.valueOf(novaConfig.isBloqueioChamada()) );
+            Log.d("msgUPDATE", String.valueOf(novaConfig.isAnuncioChamada()));
+            Log.d("msgUPDATE", String.valueOf(novaConfig.isBloqueioSms()));
+            Log.d("msgUPDATE", String.valueOf(novaConfig.isAnuncioSms()));
+        }
+
+
         return linhasAlteradas;
     }
 
