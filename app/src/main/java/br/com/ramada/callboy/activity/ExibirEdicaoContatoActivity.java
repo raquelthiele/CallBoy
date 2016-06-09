@@ -35,7 +35,7 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
         if(idContato != 0){
             if(BD.contatoDAO.getCount(idContato) != 0){
                 Contato contato = BD.contatoDAO.getContato(idContato);
-                Configuracao config = BD.agendaDAO.getConfiguracao(idContato);
+                Configuracao config = BD.agendaDAO.getConfiguracao(contato);
                 contato.setConfiguracao(config);
                 setaDefaults(contato);
             }

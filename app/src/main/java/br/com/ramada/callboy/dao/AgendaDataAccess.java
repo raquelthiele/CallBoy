@@ -77,12 +77,12 @@ public class AgendaDataAccess {
         return linhasAlteradas;
     }
 
-    public Configuracao getConfiguracao(int idContato/*, int idGrupo, int idHorario*/){
+    public Configuracao getConfiguracao(Contato contato/*, int idGrupo, int idHorario*/){
         Cursor cursor = db.query(TABELA_NOME,
                 new String[] {CAMPO_ID_CONTATO, CAMPO_ID_GRUPO, CAMPO_ID_HORARIO,
                 CAMPO_BLOQUEIO_CHAMADA, CAMPO_ANUNCIO_CHAMADA, CAMPO_BLOQUEIO_SMS, CAMPO_ANUNCIO_SMS},
                 CAMPO_ID_CONTATO +"=?"/* + CAMPO_ID_GRUPO + "=?" + CAMPO_ID_HORARIO + "=?"*/,
-                new String[] {String.valueOf(idContato)/*,String.valueOf(idGrupo),
+                new String[] {String.valueOf(contato.getId())/*,String.valueOf(idGrupo),
                         String.valueOf(idHorario)*/},
                 null,null,null,null);
 
@@ -92,10 +92,15 @@ public class AgendaDataAccess {
             }
             catch (Exception e){
                 Log.d("exc", e.getMessage());
-                return null;
+                salvarConfiguracao(contato,new Grupo(1, "Geral"), new Horario(1, "Permanente"),
+                        new Configuracao(false,false,false,false));
+                return getConfiguracao(contato);
             }
-        else
-            return null;
+        else{
+            salvarConfiguracao(contato,new Grupo(1, "Geral"), new Horario(1, "Permanente"),
+                    new Configuracao(false,false,false,false));
+            return getConfiguracao(contato);
+        }
 
         Configuracao config = new Configuracao(obterBooleanDeInt(cursor.getInt(3)),
                                                 obterBooleanDeInt(cursor.getInt(5)),
