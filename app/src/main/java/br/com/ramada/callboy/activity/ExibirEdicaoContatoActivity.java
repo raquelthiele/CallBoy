@@ -1,7 +1,9 @@
 package br.com.ramada.callboy.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import br.com.ramada.callboy.R;
+import br.com.ramada.callboy.SpellingBee;
 import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
 import br.com.ramada.callboy.model.Grupo;
@@ -40,6 +43,10 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
                 Configuracao config = BD.agendaDAO.getConfiguracao(contato);
                 contato.setConfiguracao(config);
                 setaDefaults(contato);
+
+                /*Intent service = new Intent(this.getApplicationContext(), SpellingBee.class);
+                service.putExtra("msg", contato.getNome());
+                this.getApplicationContext().startService(service);*/
             }
 
         }
@@ -197,7 +204,6 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
         this.finish();
 
     }
-
 
 
 

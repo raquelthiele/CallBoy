@@ -224,17 +224,9 @@ public class ContatoDataAccess {
                 new String[] {numeroTelefone},
                 null,null,null,null);
 
-        if(cursor!=null) {
+        if((cursor!=null) && (cursor.getCount() != 0)) {
             try{
-                Log.d("msg", "Não Tô nulo1");
                 cursor.moveToFirst();
-                if(cursor.isNull(0)){
-                    Log.d("msg","tá feio e nulo");
-                }
-                else{
-                    Log.d("msg", "tá feio demais mas não tá nulo");
-
-                }
             }
             catch (Exception e){
                 Log.d("msg", e.getMessage());
@@ -247,9 +239,6 @@ public class ContatoDataAccess {
         Contato contact = new Contato(cursor.getInt(0),cursor.getString(1),cursor.getString(2));
         cursor.close();
 
-        Log.d("msgDEBUGMÁXIMO", "" + contact.getId());
-        Log.d("msgDEBUGMÁXIMO", contact.getNome());
-        Log.d("msgDEBUGMÁXIMO", contact.getNumeroTelefone());
 
         return contact;
     }
