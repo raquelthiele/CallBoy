@@ -52,6 +52,10 @@ public class SMSReceiver extends BroadcastReceiver {
             }
             else if(contato.getConfiguracao().isAnuncioSms()){
                 //TODO: implementar o TTS
+                Intent service = new Intent(context, SpellingBee.class);
+                service.putExtra("msg", messages[0].getMessageBody());
+                context.startService(service);
+
             }
 
 
