@@ -92,8 +92,6 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
             checkBoxEnable.setEnabled(true);
         }
     }
-
-
     private void validarCheckBoxBloqueioDeSMS(boolean isChecked) {
         if ( isChecked )
         {
@@ -106,7 +104,6 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
             checkBoxEnable.setEnabled(true);
         }
     }
-
     private void validarCheckBoxAnuncioDeSMS(boolean isChecked) {
         if ( isChecked )
         {
@@ -138,7 +135,7 @@ public class  ExibirAdicaoContatoActivity extends AppCompatActivity {
         int idNovoContato = BD.contatoDAO.addContato(novoContato);
 
         novoContato.setId(idNovoContato);
-        Grupo grupo = BD.grupoDAO.getGrupo(1);
+        Grupo grupo = BD.grupoDAO.getGrupo(2);
         Horario horario = BD.horarioDAO.getHorario(1);
         BD.agendaDAO.salvarConfiguracao(novoContato, grupo, horario,configuracao);
 

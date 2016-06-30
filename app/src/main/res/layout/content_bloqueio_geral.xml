@@ -27,7 +27,7 @@
         android:text="SALVAR"
         android:id="@+id/button"
         android:layout_gravity="center_horizontal"
-        android:onClick="BloquearTudo"
+        android:onClick="bloquearTudo"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/checkBoxBloquearTodasChamadas"
         android:layout_alignEnd="@+id/checkBoxBloquearTodasChamadas" />

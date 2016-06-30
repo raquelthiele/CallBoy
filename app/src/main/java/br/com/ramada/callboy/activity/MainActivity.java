@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ramada.callboy.R;
+import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
 import br.com.ramada.callboy.model.Grupo;
 import br.com.ramada.callboy.model.Horario;
@@ -39,13 +39,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            Log.d("msg", "Não tenho permissão");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
-
         }
         else{
-            Log.d("msg", "Tenho permissão");
+            criaGrupos();
             copiaAgenda();
         }
 
@@ -60,13 +57,21 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ///criarContatoTeste();
-                //redirecionarAdicaoContato();
-                //List<Contato> contatos = BD.contatoDAO.getAllContacts();
-
                 redirecionarAdicaoContato();
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                  //      .setAction("Action", null).show();
+            }
+        });
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirecionarBloqueioGeral();
+            }
+        });
+        FloatingActionButton fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirecionarAnuncioGeral();
             }
         });
 
@@ -87,9 +92,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void redirecionarAdicaoContato() {
         Intent intent = new Intent(this, ExibirAdicaoContatoActivity.class);
-       // EditText editText = (EditText) findViewById(R.id.editText);
-        //String message = editText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
+
+    private void redirecionarBloqueioGeral() {
+        Intent intent = new Intent(this, BloqueioGeralActivity.class);
+        startActivity(intent);
+    }
+
+    private void redirecionarAnuncioGeral() {
+        Intent intent = new Intent(this, AnuncioGeralActivity.class);
         startActivity(intent);
     }
 
@@ -123,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void criarContatoTeste(){
+    private void criarContatoTeste(){
 
         if(BD.contatoDAO.getCount("Raquel", "992830552") == 0){
             Contato contato = new Contato("Raquel","992830552");
@@ -141,6 +153,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    private void criaGrupos(){
+
+        if(BD.grupoDAO.getCount() == 0){
+            Grupo geral = new Grupo(1, "Geral");
+            Grupo individual = new Grupo(2, "Individual");
+            BD.grupoDAO.salvarGrupo(geral);
+            BD.grupoDAO.salvarGrupo(individual);
+        }
+    }
+
 
     private void populaListaContatos(){
         final List<Contato> contatos = BD.contatoDAO.getAllContacts();
@@ -210,9 +233,17 @@ public class MainActivity extends AppCompatActivity {
                     pCur.close();
                 }
 
+                Grupo geral = BD.grupoDAO.getGrupo(1);
+                Grupo individual = BD.grupoDAO.getGrupo(2);
+
+
                 if(BD.contatoDAO.getCount(nome, numeroTelefone) == 0){
                     Contato contato = new Contato(nome, numeroTelefone);
                     BD.contatoDAO.addContato(contato);
+                    BD.agendaDAO.salvarConfiguracao(contato,geral, new Horario("Permanente"),
+                            new Configuracao(false, false, false, false));
+                    BD.agendaDAO.salvarConfiguracao(contato,individual, new Horario("Permanente"),
+                            new Configuracao(false, false, false, false));
                 }
             }
         }

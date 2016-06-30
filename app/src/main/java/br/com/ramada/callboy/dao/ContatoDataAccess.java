@@ -44,7 +44,6 @@ public class ContatoDataAccess {
     }
 
     public int addContato(Contato contato){
-        Log.d("msg","contato adicionado");
         ContentValues values = new ContentValues();
         values.put(CAMPO_NOME, contato.getNome());
         values.put(CAMPO_NUMERO, contato.getNumeroTelefone());
@@ -103,7 +102,6 @@ public class ContatoDataAccess {
     }
 
     public int updateContato(Contato contato){
-        Log.d("msg","contato adicionado");
         ContentValues values = new ContentValues();
         values.put(CAMPO_NOME, contato.getNome());
         values.put(CAMPO_NUMERO, contato.getNumeroTelefone());
@@ -177,7 +175,7 @@ public class ContatoDataAccess {
                 cursor.moveToFirst();
             }
             catch (Exception e){
-                Log.d("excecption", e.getMessage());
+                Log.d("exception", e.getMessage());
                 return null;
             }
         }
@@ -218,7 +216,6 @@ public class ContatoDataAccess {
     }
 
     public Contato getContato(String numeroTelefone){
-        Log.d("msg", numeroTelefone);
         Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME, CAMPO_NUMERO},
                 CAMPO_NUMERO + "=?",
                 new String[] {numeroTelefone},

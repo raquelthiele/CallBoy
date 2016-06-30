@@ -1,4 +1,4 @@
-package br.com.ramada.callboy;
+package br.com.ramada.callboy.service;
 
 import android.annotation.SuppressLint;
 import android.app.Service;
@@ -13,7 +13,7 @@ import android.util.Log;
 import java.util.Locale;
 
 /**
- * Created by danie on 28/06/2016.
+ * Created by RAMADA on 28/06/2016.
  */
 public class SpellingBee extends Service implements TextToSpeech.OnInitListener, TextToSpeech.OnUtteranceCompletedListener {
 
@@ -22,7 +22,6 @@ public class SpellingBee extends Service implements TextToSpeech.OnInitListener,
 
 
     public SpellingBee(){
-
     }
 
     public SpellingBee(Context context, String msg){
@@ -30,16 +29,12 @@ public class SpellingBee extends Service implements TextToSpeech.OnInitListener,
         this.msg = msg;
     }
 
-
-
-    @SuppressLint("NewApi")
     @Override
     public int onStartCommand (Intent intent, int flags, int startId){
         if(intent != null){
             this.msg = intent.getStringExtra("msg");
         }
         tts = new TextToSpeech(this, this);
-        Log.d("msgIRRITADA", "ODIO");
         return START_STICKY;
     }
 
@@ -81,16 +76,12 @@ public class SpellingBee extends Service implements TextToSpeech.OnInitListener,
     }
 
     public void anuncia(String msg) {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Log.d("msg", "Entrei em if com " + msg);
             tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null, null);
         }
         else{
-            Log.d("msg", "Entrei em else com " + msg);
             tts.speak(msg, TextToSpeech.QUEUE_FLUSH, null);
         }
-
     }
 
     @Override

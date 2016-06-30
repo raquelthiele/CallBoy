@@ -10,7 +10,7 @@ import br.com.ramada.callboy.model.Grupo;
 import br.com.ramada.callboy.model.Horario;
 
 /**
- * Created by danie on 22/05/2016.
+ * Created by RAMADA on 22/05/2016.
  */
 public class AgendaDataAccess {
 
@@ -65,16 +65,8 @@ public class AgendaDataAccess {
     }
 
     // TODO: some serious need of debugging
-    public int atualizarConfiguracao(Contato contato, /*Grupo grupo, Horario horario,*/ Configuracao configuracao){
-        Log.d("msg","contato atualizado");
-        getConfiguracao(contato);
-        Log.d("msgUPDATECONTATO", String.valueOf(contato.getId()) );
-        Log.d("msgUPDATECONTATO", String.valueOf(contato.getNome()));
-        Log.d("msgUPDATECONTATO", String.valueOf(contato.getNumeroTelefone()));
-        Log.d("msgUPDATE", String.valueOf(configuracao.isBloqueioChamada()) );
-        Log.d("msgUPDATE", String.valueOf(configuracao.isAnuncioChamada()));
-        Log.d("msgUPDATE", String.valueOf(configuracao.isBloqueioSms()));
-        Log.d("msgUPDATE", String.valueOf(configuracao.isAnuncioSms()));
+    public int atualizarConfiguracao(Contato contato, Grupo grupo, /* Horario horario,*/ Configuracao configuracao){
+        getConfiguracao(contato, grupo);
         ContentValues values = new ContentValues();
         values.put(CAMPO_BLOQUEIO_CHAMADA, configuracao.isBloqueioChamada());
         values.put(CAMPO_ANUNCIO_CHAMADA, configuracao.isAnuncioChamada());
@@ -85,7 +77,8 @@ public class AgendaDataAccess {
         // CAMPO_ID_GRUPO + " = 1 " + CAMPO_ID_HORARIO + " = 1 ",
         int linhasAlteradas = 0;
         try{
-            linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID_CONTATO + " = " + contato.getId(), null);
+            linhasAlteradas = db.update(TABELA_NOME, values, CAMPO_ID_CONTATO + " = " + contato.getId()
+                                        + " AND " + CAMPO_ID_GRUPO + " = " + grupo.getId(), null);
             Log.d("msgSQL", linhasAlteradas + " linhas alteradas");
 
         }
@@ -95,7 +88,7 @@ public class AgendaDataAccess {
         }
 
         if(linhasAlteradas > 0){
-            Configuracao novaConfig = getConfiguracao(contato);
+            Configuracao novaConfig = getConfiguracao(contato, grupo);
             Log.d("msgUPDATE", String.valueOf(novaConfig.isBloqueioChamada()) );
             Log.d("msgUPDATE", String.valueOf(novaConfig.isAnuncioChamada()));
             Log.d("msgUPDATE", String.valueOf(novaConfig.isBloqueioSms()));
@@ -106,7 +99,7 @@ public class AgendaDataAccess {
         return linhasAlteradas;
     }
 
-    public Configuracao getConfiguracao(Contato contato/*, int idGrupo, int idHorario*/){
+    public Configuracao getConfiguracao(Contato contato, Grupo grupo /*, int idHorario*/){
         Cursor cursor = db.query(TABELA_NOME,
                 new String[] {CAMPO_ID_CONTATO, CAMPO_ID_GRUPO, CAMPO_ID_HORARIO,
                 CAMPO_BLOQUEIO_CHAMADA, CAMPO_ANUNCIO_CHAMADA, CAMPO_BLOQUEIO_SMS, CAMPO_ANUNCIO_SMS},
@@ -121,14 +114,14 @@ public class AgendaDataAccess {
             }
             catch (Exception e){
                 Log.d("exc", e.getMessage());
-                salvarConfiguracao(contato,new Grupo(1, "Geral"), new Horario(1, "Permanente"),
+                salvarConfiguracao(contato, grupo, new Horario(1, "Permanente"),
                         new Configuracao(false,false,false,false));
-                return getConfiguracao(contato);
+                return getConfiguracao(contato, grupo);
             }
         else{
-            salvarConfiguracao(contato,new Grupo(1, "Geral"), new Horario(1, "Permanente"),
+            salvarConfiguracao(contato, grupo, new Horario(1, "Permanente"),
                     new Configuracao(false,false,false,false));
-            return getConfiguracao(contato);
+            return getConfiguracao(contato, grupo);
         }
 
         Configuracao config = new Configuracao(obterBooleanDeInt(cursor.getInt(3)),

@@ -1,9 +1,6 @@
 package br.com.ramada.callboy.activity;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +9,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import br.com.ramada.callboy.R;
-import br.com.ramada.callboy.SpellingBee;
 import br.com.ramada.callboy.model.Configuracao;
 import br.com.ramada.callboy.model.Contato;
 import br.com.ramada.callboy.model.Grupo;
@@ -21,7 +17,7 @@ import br.com.ramada.callboy.model.Horario;
 import static br.com.ramada.callboy.CallBoy.BD;
 
 /**
- * Created by danie on 24/05/2016.
+ * Created by RAMADA on 24/05/2016.
  */
 public class ExibirEdicaoContatoActivity extends AppCompatActivity {
 
@@ -35,12 +31,12 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
 
         int idContato = getIntent().getIntExtra("idContato", 0);
         this.idContato = idContato;
-        Log.d("msgIDCONTATO", String.valueOf(this.idContato));
 
         if(idContato != 0){
             if(BD.contatoDAO.getCount(idContato) != 0){
                 Contato contato = BD.contatoDAO.getContato(idContato);
-                Configuracao config = BD.agendaDAO.getConfiguracao(contato);
+                Grupo grupo = BD.grupoDAO.getGrupo(2);
+                Configuracao config = BD.agendaDAO.getConfiguracao(contato, grupo);
                 contato.setConfiguracao(config);
                 setaDefaults(contato);
 
@@ -123,19 +119,6 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
     }
 
 
-    private void validarCheckBoxBloqueioDeSMS(boolean isChecked) {
-        if ( isChecked )
-        {
-            CheckBox checkBoxDisabled = ( CheckBox ) findViewById( R.id.checkBoxAnunciarSMS );
-            checkBoxDisabled.setEnabled(false);
-            checkBoxDisabled.setChecked(false);
-
-        }else {
-            CheckBox checkBoxEnable = ( CheckBox ) findViewById( R.id.checkBoxAnunciarSMS );
-            checkBoxEnable.setEnabled(true);
-        }
-    }
-
     private void validarCheckBoxAnuncioDeSMS(boolean isChecked) {
         if ( isChecked )
         {
@@ -145,6 +128,19 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
 
         }else {
             CheckBox checkBoxEnable = ( CheckBox ) findViewById( R.id.checkBoxBloquearSMS );
+            checkBoxEnable.setEnabled(true);
+        }
+    }
+
+    private void validarCheckBoxBloqueioDeSMS(boolean isChecked) {
+        if ( isChecked )
+        {
+            CheckBox checkBoxDisabled = ( CheckBox ) findViewById( R.id.checkBoxAnunciarSMS );
+            checkBoxDisabled.setEnabled(false);
+            checkBoxDisabled.setChecked(false);
+
+        }else {
+            CheckBox checkBoxEnable = ( CheckBox ) findViewById( R.id.checkBoxAnunciarSMS );
             checkBoxEnable.setEnabled(true);
         }
     }
@@ -193,13 +189,11 @@ public class ExibirEdicaoContatoActivity extends AppCompatActivity {
         Configuracao configuracao = new Configuracao(checkBoxBloquearChamada.isChecked(),checkBoxBloquearSMS.isChecked(),checkBoxAnunciarChamada.isChecked(),checkBoxAnunciarSMS.isChecked());
         Contato novoContato= new Contato(this.idContato,nomeContato.getText().toString(),
                                             numeroTelefone.getText().toString()/*,configuracao*/);
-        Log.d("DEBUG", novoContato.getNome());
-        Log.d("DEBUG", novoContato.getNumeroTelefone());
 
         BD.contatoDAO.updateContato(novoContato);
-        Grupo grupo = BD.grupoDAO.getGrupo(1);
+        Grupo grupo = BD.grupoDAO.getGrupo(2);
         Horario horario = BD.horarioDAO.getHorario(1);
-        BD.agendaDAO.atualizarConfiguracao(novoContato, configuracao);
+        BD.agendaDAO.atualizarConfiguracao(novoContato, grupo, configuracao);
 
         this.finish();
 

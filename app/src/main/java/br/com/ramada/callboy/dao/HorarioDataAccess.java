@@ -33,7 +33,6 @@ public class HorarioDataAccess {
 
 
     public long salvarHorario(Horario horario){
-        Log.d("msg","horario adicionado");
         ContentValues values = new ContentValues();
         values.put(CAMPO_NOME, horario.getNome());
 

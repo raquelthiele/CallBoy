@@ -5,6 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import br.com.ramada.callboy.model.Contato;
+import br.com.ramada.callboy.model.Grupo;
+
+import static br.com.ramada.callboy.CallBoy.BD;
 
 
 /**
@@ -15,7 +18,7 @@ import br.com.ramada.callboy.model.Contato;
 public class Database extends SQLiteOpenHelper
 {
     protected static SQLiteDatabase BD;
-    private static final int DB_VERSION = 11;
+    private static final int DB_VERSION = 14;
     private static final String DB_NAME = "CallBoyDB";
 
     public static ContatoDataAccess contatoDAO;
@@ -46,13 +49,10 @@ public class Database extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("PRAGMA foreign_keys = ON;");
         db.execSQL(contatoDAO.CREATE_TABELA);
-        Log.d("msg",contatoDAO.CREATE_TABELA);
         db.execSQL(grupoDAO.CREATE_TABELA);
-        Log.d("msg",grupoDAO.CREATE_TABELA);
         db.execSQL(horarioDAO.CREATE_TABELA);
-        Log.d("msg",horarioDAO.CREATE_TABELA);
         db.execSQL(agendaDAO.CREATE_TABELA);
-        Log.d("msg",agendaDAO.CREATE_TABELA);
+
     }
 
     @Override

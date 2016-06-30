@@ -49,31 +49,59 @@
                 android:value=".activity.MainActivity" />
         </activity>
 
-        <receiver android:name=".ChamadaReceiver" >
+        <activity
+                android:name=".activity.BarraLateralActivity"
+                android:label="@string/title_activity_barra_lateral"
+                android:theme="@style/AppTheme.NoActionBar" >
+        <!--android:parentActivityName=".activity.MainActivity" -->
+
+        </activity>
+
+        <activity
+                android:name=".activity.AnuncioGeralActivity"
+                android:label="@string/title_activity_exibir_adicao_contato"
+                android:parentActivityName=".activity.BarraLateralActivity"
+                android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activity.BarraLateralActivity" />
+        </activity>
+
+        <activity
+                android:name=".activity.BloqueioGeralActivity"
+                android:label="@string/title_activity_exibir_adicao_contato"
+                android:parentActivityName=".activity.BarraLateralActivity"
+                android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activity.BarraLateralActivity" />
+        </activity>
+
+        <activity
+                android:name=".activity.LerSMSGeralActivity"
+                android:label="@string/title_activity_exibir_adicao_contato"
+                android:parentActivityName=".activity.BarraLateralActivity"
+                android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".activity.BarraLateralActivity" />
+        </activity>
+
+
+        <receiver android:name=".receiver.ChamadaReceiver" >
             <intent-filter android:priority="100" >
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".activity.BarraLateralActivity"
-            android:label="@string/title_activity_barra_lateral"
-            android:parentActivityName=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.ramada.callboy.activity.MainActivity" />
-        </activity>
-
-
-        <receiver android:name=".SMSReceiver" android:enabled="true" android:exported="true" >
+        <receiver android:name=".receiver.SMSReceiver" android:enabled="true" android:exported="true" >
             <intent-filter android:priority="999" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
 
         </receiver>
 
-        <service android:name=".SpellingBee" android:exported="false" android:enabled="true">
+        <service android:name=".service.SpellingBee" android:exported="false" android:enabled="true">
         </service>
 
     </application>

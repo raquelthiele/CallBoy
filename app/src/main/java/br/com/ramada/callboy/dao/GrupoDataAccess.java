@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import br.com.ramada.callboy.model.Grupo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Ramada on 22/05/2016.
  */
@@ -31,7 +34,6 @@ public class GrupoDataAccess {
 
 
     public long salvarGrupo(Grupo grupo){
-        Log.d("msg","grupo adicionado");
         ContentValues values = new ContentValues();
         values.put(CAMPO_NOME, grupo.getNome());
 
@@ -43,7 +45,7 @@ public class GrupoDataAccess {
     public Grupo getGrupo(int idGrupo){
         Cursor cursor = db.query(TABELA_NOME,new String[] {CAMPO_ID, CAMPO_NOME},
                 CAMPO_ID +"=?", new String[] {String.valueOf(idGrupo)}, null,null,null,null);
-        if(cursor!=null)
+        if(cursor.getCount() != 0)
             try{
                 cursor.moveToFirst();
             }
@@ -83,7 +85,7 @@ public class GrupoDataAccess {
                 CAMPO_NOME + " = '" + nome + "';";
 
         Cursor cursor = db.rawQuery(countQuery, null);
-        if(cursor!=null)
+        if(cursor.getCount() != 0)
             cursor.moveToFirst();
         else
             return 0;
@@ -91,6 +93,33 @@ public class GrupoDataAccess {
         return count;
     }
 
+    public int getCount(){
+        String countQuery = "SELECT COUNT(*) AS COUNT FROM "+ TABELA_NOME + ";";
+
+        Cursor cursor = db.rawQuery(countQuery, null);
+        if(cursor.getCount() != 0)
+            cursor.moveToFirst();
+        else
+            return 0;
+        int count = cursor.getInt(0);
+        return count;
+    }
+
+    public List<Grupo> getAllGroups(){
+        List<Grupo> groupList = new ArrayList<Grupo>();
+        String selectQuery = "SELECT * FROM " + TABELA_NOME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        //Construindo a lista
+        if(cursor.moveToFirst()){
+            do{
+                Grupo grupo = new Grupo(cursor.getInt(0), cursor.getString(1));
+                groupList.add(grupo);
+            }while(cursor.moveToNext());
+        }else
+            return null;
+        cursor.close();
+        return groupList;
+    }
 
 
 }
