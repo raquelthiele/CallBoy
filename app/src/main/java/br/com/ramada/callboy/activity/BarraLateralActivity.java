@@ -94,7 +94,7 @@ public class BarraLateralActivity extends AppCompatActivity
             Intent intent = new Intent(getBaseContext(), AnuncioGeralActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_configuracao) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
             startActivity(intent);
         }
 
