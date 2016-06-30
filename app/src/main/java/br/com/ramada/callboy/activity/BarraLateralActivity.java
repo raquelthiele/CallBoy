@@ -1,5 +1,6 @@
 package br.com.ramada.callboy.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -80,19 +81,21 @@ public class BarraLateralActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_agenda) {
-
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_bloqueio) {
-
+            Intent intent = new Intent(BarraLateralActivity.this, BloqueioGeralActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_anuncio) {
-
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_configuracao) {
-
-        }
-        else if (id == R.id.nav_leitura_sms) {
-
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
