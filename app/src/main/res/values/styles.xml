@@ -5,7 +5,8 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/accent_material_light</item>
         <item name="colorPrimaryDark">@color/accent_material_dark</item>
-        <item name="colorAccent">@color/bright_foreground_material_light</item>
+        <item name="colorAccent">@color/background_floating_material_dark</item>
+        <item name="android:colorBackground">@android:color/secondary_text_dark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
