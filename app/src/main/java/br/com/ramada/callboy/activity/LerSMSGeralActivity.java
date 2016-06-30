@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import br.com.ramada.callboy.R;
 
-public class LerSmSGeralActivity extends AppCompatActivity {
+class LerSmSGeralActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
