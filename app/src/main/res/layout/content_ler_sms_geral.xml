@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".LerSMSGeralActivity"
-    tools:showIn="@layout/activity_lerSMS_geral"
+    tools:context=".activity.LerSmSGeralActivity"
+    tools:showIn="@layout/activity_ler_sms_geral"
     android:weightSum="1"
     android:orientation="vertical">
 

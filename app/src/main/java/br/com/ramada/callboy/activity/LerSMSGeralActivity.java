@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import br.com.ramada.callboy.R;
 
-public class LerSMSGeralActivity extends AppCompatActivity {
+public class LerSmSGeralActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lerSMS_geral);
+        setContentView(R.layout.activity_ler_sms_geral);
     }
 }

@@ -7,8 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".LerSMSGeralActivity">
+    tools:context=".activity.LerSmSGeralActivity">
 
-    <include layout="@layout/content_lerSMS_geral" />
+    <include layout="@layout/content_ler_sms_geral" />
 
 </RelativeLayout>
