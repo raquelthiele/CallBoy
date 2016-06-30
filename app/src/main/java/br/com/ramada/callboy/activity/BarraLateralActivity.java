@@ -83,12 +83,15 @@ public class BarraLateralActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_agenda) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_bloqueio) {
 
         } else if (id == R.id.nav_anuncio) {
 
         } else if (id == R.id.nav_configuracao) {
+
+        }
+        else if (id == R.id.nav_leitura_sms) {
 
         }
 
